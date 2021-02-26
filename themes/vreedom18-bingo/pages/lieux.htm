@@ -1,0 +1,107 @@
+title = "Lieux"
+url = "/lieux"
+layout = "default"
+is_hidden = 0
+
+[builderList]
+modelClass = "Dlp\Events\Models\Location"
+scope = "-"
+scopeValue = "{{ :scope }}"
+displayColumn = "name"
+noRecordsMessage = "No records found"
+detailsPage = "lieu"
+detailsKeyColumn = "slug"
+detailsUrlParameter = "slug"
+pageNumber = "{{ :page }}"
+
+[siteSearchInclude]
+==
+{% partial 'site/sp-header' %}
+
+
+{% set records = builderList.records %}
+{% set displayColumn = builderList.displayColumn %}
+{% set noRecordsMessage = builderList.noRecordsMessage %}
+{% set detailsPage = builderList.detailsPage %}
+{% set detailsKeyColumn = builderList.detailsKeyColumn %}
+{% set detailsUrlParameter = builderList.detailsUrlParameter %}
+
+
+<section class="posts section">
+    <div class="container">
+
+        <div class="row justify-content-center">
+            <!-- section title -->
+            <div class="col-xl-6 col-lg-8">
+                <div class="title text-center">
+                    <h2>Nos lieux favoris</h2>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate facilis eveniet maiores ab
+                        maxime nam ut numquam molestiae quaerat incidunt?
+                    </p>
+                    <div class="border"></div>
+                </div>
+            </div>
+            <!-- /section title -->
+        </div>
+
+        <div class="row">
+
+
+    {% for record in records %}
+
+    <article class="col-lg-4 col-md-6">
+        <div class="post-item">
+            <div class="media-wrapper">
+                {% if record.poster %}
+                <img loading="lazy" class="img-fluid" src="{{ record.poster.thumb(1170,880, {'mode':'crop'}) }}" alt="Poster">
+                {% else %}
+                <img loading="lazy" class="img-fluid" style="width: 20rem;" src="{{'assets/images/undraw_map_1r69.svg'|theme}}" alt="Poster">
+                {% endif %}
+            </div>
+
+            <div class="content">
+                <h3><a href="{{ 'single-post'|page }}">{{record.name}}</a></h3>
+                <p>
+                    {{ record.description |raw }}
+                </p>
+
+                {# Use spaceless tag to remove spaces inside the A tag. #}
+                {% spaceless %}
+                    {% if detailsPage %}
+                        <a class="btn btn-main" href="{{ detailsPage|page({ (detailsUrlParameter): attribute(record, detailsKeyColumn) }) }}">Voir plus</a>
+                    {% endif %}
+                {% endspaceless %}
+                
+            </div>
+        </div>
+    </article>
+
+
+    {% else %}
+        <li class="no-data">{{ noRecordsMessage }}</li>
+    {% endfor %}
+
+
+</div>
+</div>
+</section>
+
+
+{% if records.lastPage > 1 %}
+    <ul class="pagination">
+        {% if records.currentPage > 1 %}
+            <li><a href="{{ this.page.baseFileName|page({ (pageParam): (records.currentPage-1) }) }}">&larr; Prev</a></li>
+        {% endif %}
+
+        {% for page in 1..records.lastPage %}
+            <li class="{{ records.currentPage == page ? 'active' : null }}">
+                <a href="{{ this.page.baseFileName|page({ (pageParam): page }) }}">{{ page }}</a>
+            </li>
+        {% endfor %}
+
+        {% if records.lastPage > records.currentPage %}
+            <li><a href="{{ this.page.baseFileName|page({ (pageParam): (records.currentPage+1) }) }}">Next &rarr;</a></li>
+        {% endif %}
+    </ul>
+{% endif %}

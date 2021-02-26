@@ -1,0 +1,10 @@
+name: Inscriptions
+form: $/dlp/events/models/inscription/fields.yaml
+modelClass: Dlp\Events\Models\Inscription
+defaultRedirect: dlp/events/inscriptions
+create:
+    redirect: 'dlp/events/inscriptions/update/:id'
+    redirectClose: dlp/events/inscriptions
+update:
+    redirect: dlp/events/inscriptions
+    redirectClose: dlp/events/inscriptions

@@ -1,0 +1,10 @@
+name: Partitions
+form: $/dlp/events/models/partition/fields.yaml
+modelClass: Dlp\Events\Models\Partition
+defaultRedirect: dlp/events/partitions
+create:
+    redirect: 'dlp/events/partitions/update/:id'
+    redirectClose: dlp/events/partitions
+update:
+    redirect: dlp/events/partitions
+    redirectClose: dlp/events/partitions

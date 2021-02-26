@@ -1,0 +1,17 @@
+fields:
+    name:
+        label: 'Nom de l''instrument'
+        span: auto
+        type: text
+    slug:
+        label: Slug
+        span: auto
+        preset:
+            field: name
+            type: slug
+        type: text
+    description:
+        label: Description
+        size: ''
+        span: auto
+        type: textarea

@@ -1,0 +1,22 @@
+tabs:
+  fields:
+    ### General
+    # Website Details
+    general_settings_section:
+      tab: General
+      label: Website Details
+      type: section
+    site__title:
+      tab: General
+      label: Title
+      type: text
+      span: left
+      default: Bingo 
+      comment: Used at site title
+    site__description:
+      tab: General
+      label: Description
+      type: text
+      span: right
+      default: My new websites
+      comment: Used at site description

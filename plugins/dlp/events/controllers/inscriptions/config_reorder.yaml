@@ -1,0 +1,4 @@
+title: Inscriptions
+modelClass: Dlp\Events\Models\Inscription
+toolbar:
+    buttons: reorder_toolbar

@@ -1,0 +1,4 @@
+title: Partitions
+modelClass: Dlp\Events\Models\Partition
+toolbar:
+    buttons: reorder_toolbar

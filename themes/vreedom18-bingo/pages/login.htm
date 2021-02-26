@@ -1,0 +1,125 @@
+title = "Login"
+url = "/login"
+layout = "default"
+is_hidden = 0
+
+[account]
+redirect = "login"
+paramCode = "code"
+forceSecure = 0
+requirePassword = 0
+
+[session]
+security = "all"
+redirect = "prive"
+==
+{% partial 'site/sp-header' %}
+
+<style>
+    .contact-form-submit {
+  border: none;
+  padding: 15px 0;
+  width: 100%;
+  margin: 0;
+  background: #28ABE3;
+  color: #fff;
+  border-radius: 0;
+}
+</style>
+
+
+<section class="contact-us" id="contact">
+    <div class="container">
+        <div class="row justify-content-center">
+            <!-- section title -->
+            <div class="col-xl-6 col-lg-8">
+                <div class="title text-center">
+                    <h2>Connectez vous</h2>
+                    <p>
+                        Etre connecté vous donne accès à l'espace réservé aux membres de la Banda.
+                        Utilisez votre adresse mail, et le mot de passe qui vous a été donné par le Bureau. 
+                    </p>
+                    <div class="border"></div>
+                </div>
+            </div>
+            <!-- /section title -->
+        </div>
+        <div class="row">
+            <!-- Login Image -->
+            <div class="contact-details col-md-6 ">
+                <div class="title text-center">
+                    <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;" src="https://yarig.fr/undraw_Access_account_re_8spm.svg" alt="">           
+                </div>
+            </div>
+            <!-- / End Login Image -->
+
+                        <!-- Login Form -->
+                        <div class="contact-form col-md-6 ">
+
+                            {% if not user %}
+
+                            {{ form_ajax('onSignin') }}
+
+                            <form id="login-form" method="post" role="form">
+                                <div class="form-group mb-4">
+                                    <input
+                                    name="login"
+                                    type="text"
+                                    class="form-control"
+                                    id="userSigninLogin"
+                                    placeholder="Entrez votre {{ loginAttributeLabel|lower }}" />
+                                </div>
+            
+                                <div class="form-group mb-4">
+                                    <input
+                                    name="password"
+                                    type="password"
+                                    class="form-control"
+                                    id="userSigninPassword"
+                                    placeholder="Entrez votre mot de passe" />
+                                </div>
+
+                                {% if rememberLoginMode == 'ask' %}
+                                <div class="form-group">
+                                    <div class="checkbox">
+                                    <label><input name="remember" type="checkbox" value="1">Restez connecté(e)</label>
+                                    </div>
+                                </div>
+                                {% endif %}
+            
+                                <div id="cf-submit">
+                                    <input type="submit" id="contact-submit" class="btn btn-transparent" value="Connexion">
+                                </div>
+            
+                            </form>
+
+                            {{ form_close() }}
+                        </div>
+                        <!-- ./End Login Form -->
+
+
+                    {% else %}
+
+                    <h4>Bienvenue {{ user.name }},</h4>
+
+                    <h4>Vous êtes maintenant connecté(e).</h4>
+
+                    <div class="border"></div>
+                     
+                    <a type="btn" class="contact-form-submit btn btn-transparent" data-request="onLogout" data-request-data="redirect: '/'">Déconnexion et retour à la page Accueil</a>
+                   
+
+                    {% endif %}
+
+
+
+                </div>
+
+
+
+            
+            
+
+        </div> <!-- end row -->
+    </div> <!-- end container -->
+</section> <!-- end section -->

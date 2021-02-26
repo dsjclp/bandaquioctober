@@ -1,0 +1,24 @@
+title = "Infos"
+url = "/infos"
+layout = "default"
+is_hidden = 0
+
+==
+<?php
+use  Rainlab\User\Models\User;
+
+function onStart()
+{
+$this['users'] = User::all();
+
+}
+?>
+==
+
+
+
+{% partial 'site/sp-header' %}
+
+{% partial 'about/about-shot-info' %}
+{% partial 'about/company-mission' %}
+{% partial 'about/promo-video' %}

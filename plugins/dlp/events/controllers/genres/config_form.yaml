@@ -1,0 +1,10 @@
+name: Genres
+form: $/dlp/events/models/genre/fields.yaml
+modelClass: Dlp\Events\Models\Genre
+defaultRedirect: dlp/events/genres
+create:
+    redirect: 'dlp/events/genres/update/:id'
+    redirectClose: dlp/events/genres
+update:
+    redirect: dlp/events/genres
+    redirectClose: dlp/events/genres

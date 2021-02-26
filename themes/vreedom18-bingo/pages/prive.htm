@@ -1,0 +1,100 @@
+title = "Privé"
+url = "/prive"
+layout = "default"
+is_hidden = 0
+
+[session]
+security = "user"
+redirect = "login"
+
+[builderList]
+modelClass = "Dlp\Events\Models\Event"
+scope = "-"
+scopeValue = "{{ :scope }}"
+displayColumn = "name"
+noRecordsMessage = "No records found"
+detailsPage = "evenement"
+detailsKeyColumn = "slug"
+detailsUrlParameter = "slug"
+pageNumber = "{{ :page }}"
+==
+<?php
+use  Dlp\Events\Models\Event;
+
+function onStart()
+{
+$this['events'] = Event::where('time_begin', '>=', now())->orderBy('time_begin','desc')->take(5)->get();
+$this['oldevents'] = Event::where('time_end', '<', now())->orderBy('time_begin','asc')->take(5)->get();
+
+
+}
+?>
+==
+{% component 'session' %}
+
+{% partial 'site/sp-header' %}
+
+
+<section class="service-2 section">
+    <div class="container">
+        <div class="row justify-content-center">
+
+            <div class="col-lg-6">
+                <!-- section title -->
+                <div class="title text-center">
+                    <h2>Vos outils</h2>
+                    <p>Retrouvez ici vos partitions, les dernières infos, les cartes ...</p>
+                    <div class="widget-search widget mt-3">
+                        <form action="{{ 'search' | page }}" method="get">
+                            <!-- Search bar -->
+                            <input class="form-control shadow-none" type="text" placeholder="Recherchez : un événement, un lieu, une partition ..." name="q">
+                            <button type="submit" class="widget-search-btn">
+                                <i class="tf-ion-ios-search"></i>
+                            </button>
+                        </form>
+                    </div>
+                    <div class="border"></div>
+                </div>
+                <!-- /section title -->
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="row text-center">
+                    <div class="col-md-4 col-sm-6">
+                        <div class="service-item">
+                            <a href="{{ 'evenements'|page }}"><i class="tf-ion-ios-clock-outline"></i></a>
+                            <h4>Prochains événements</h4>
+                            <p>Inscrivez vous, pour aider l'organisation de la Banda.</p>
+                        </div>
+                    </div><!-- END COL -->
+                    <div class="col-md-4 col-sm-6">
+                        <div class="service-item">
+                            <a href="{{ 'partitions'|page }}"><i class="tf-ion-ios-book-outline"></i></a>
+                            <h4>Partitions</h4>
+                            <p>Accédez aux partitions pour votre instrument, ainsi qu'à la liste actuelle des séries.</p>
+                        </div>
+                    </div><!-- END COL -->
+                    <div class="col-md-4 col-sm-6">
+                        <div class="service-item">
+                            <a href="{{ 'messages'|page }}"><i class="tf-ion-ios-information-outline"></i></a>
+                            <h4>Messages</h4>
+                            <p>Prenez connaissance des dernières nouvelles de la Banda.</p>
+                        </div>
+                    </div><!-- END COL -->
+                    <div class="col-md-4 col-sm-6">
+                        <div class="service-item">
+                            <a href="{{ 'lieux'|page }}"><i class="tf-ion-ios-navigate-outline"></i></a>
+                            <h4>Lieux et cartes</h4>
+                            <p>Accédez aux informations sur les différents lieux fréquentés par la Banda, avec les cartes.</p>
+                        </div>
+                    </div><!-- END COL -->
+                </div>
+            </div>
+        </div> <!-- End row -->
+    </div> <!-- End container -->
+</section> <!-- End section -->
+
+{{ 'about'|page }}

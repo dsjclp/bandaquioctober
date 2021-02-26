@@ -1,0 +1,69 @@
+fields:
+    name:
+        label: Titre
+        span: left
+        type: text
+    time_begin:
+        label: 'Date de début'
+        mode: datetime
+        span: left
+        type: datepicker
+    time_end:
+        label: 'Date de fin'
+        mode: datetime
+        span: auto
+        type: datepicker
+    genres:
+        label: Genres
+        nameFrom: genre_title
+        descriptionFrom: description
+        span: auto
+        type: relation
+    locations:
+        label: Lieux
+        span: auto
+        nameFrom: name
+        descriptionFrom: description
+        type: relation
+    public:
+        label: 'Evénement public'
+        span: auto
+        type: switch
+    slug:
+        label: Slug
+        span: auto
+        preset:
+            field: name
+            type: slug
+        type: text
+    description:
+        label: Description
+        size: ''
+        span: full
+        type: richeditor
+tabs:
+    fields:
+        poster:
+            label: Poster
+            mode: image
+            imageWidth: '100'
+            imageHeight: '100'
+            useCaption: true
+            thumbOptions:
+                mode: crop
+                extension: auto
+            span: auto
+            type: fileupload
+            tab: 'Tab 1'
+        gallery:
+            label: Galerie
+            mode: image
+            imageWidth: '80'
+            imageHeight: '80'
+            useCaption: true
+            thumbOptions:
+                mode: crop
+                extension: auto
+            span: auto
+            type: fileupload
+            tab: 'Tab 1'

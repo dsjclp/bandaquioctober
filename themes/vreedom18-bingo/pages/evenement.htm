@@ -1,0 +1,287 @@
+title = "Evénement"
+url = "/evenement/:slug"
+layout = "default"
+is_hidden = 0
+
+[inscriptionform]
+
+[session]
+security = "user"
+
+[builderDetails]
+modelClass = "Dlp\Events\Models\Event"
+identifierValue = "{{ :slug }}"
+modelKeyColumn = "slug"
+displayColumn = "slug"
+notFoundMessage = "Record not found"
+
+==
+<?php
+use  Dlp\Events\Models\Inscription;
+use  Dlp\Events\Models\Event;
+use  Dlp\Events\Models\Instrument;
+
+function onStart()
+{
+    //use BackendAuth;
+    //$user = BackendAuth::getUser();
+    //use Auth;
+    //$user = Auth::getUser();
+    $slug = $this->param('slug');
+    $this['event'] = Event::where('slug', '=', $slug)->first();
+
+    $this['presences'] = Inscription::all()->where('event_id', '=', $this['event']->id)->where('position', '=', 1)->countBy('instrument_id');
+    $this['absences']  = Inscription::all()->where('event_id', '=', $this['event']->id)->where('position', '=', 0)->countBy('instrument_id');
+    
+    $this['presencescount'] = $this['presences']->map(function ($item, $key) {
+        $instrument = Instrument::find($key);
+        $key = $instrument->name;
+        return $item . ' en '.$key;
+    });
+
+    $this['absencescount'] = $this['absences']->map(function ($item, $key) {
+        $instrument = Instrument::find($key);
+        $key = $instrument->name;
+        return $item . ' en '.$key;
+    });
+    
+}
+?>
+==
+
+
+
+{% set record = builderDetails.record %}
+{% set displayColumn = builderDetails.displayColumn %}
+{% set notFoundMessage = builderDetails.notFoundMessage %}
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.3/leaflet.css" rel="stylesheet" type="text/css"/>
+
+<style>
+    .hidden {visibility: hidden;}
+</style>
+
+
+{% if record %}
+
+<section class="counter-wrapper section-sm">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-6 col-lg-8 text-center">
+                <div class="title">
+                    <h2>{{record.name}}</h2>
+                    {{record.description|raw}}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!-- first count item -->
+            <div class="col-md-4 col-sm-6 col-xs-6 text-center ">
+                <div class="counters-item">
+                    <i class="tf-ion-ios-alarm-outline"></i>
+                    <h3>Quand</h3>
+                    <div>
+                        <span class="counter">le {{ record.time_begin|frenchDate('%e %B %Y') }}</span>
+                    </div>
+                </div>
+            </div>
+            <!-- end first count item -->
+
+            <!-- second count item -->
+            <div class="col-md-4 col-sm-6 col-xs-6 text-center ">
+                <div class="counters-item">
+                    <i class="tf-ion-ios-navigate-outline"></i>
+                    <h3>Où</h3>
+                    <div>
+                        <span class="counter">
+                            à {% for location in record.locations %}
+                            {{location.name}}
+                            {% endfor%}
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <!-- end second count item -->
+
+            <!-- third count item -->
+            <div class="col-md-4 col-sm-6 col-xs-6 text-center ">
+                <div class="counters-item">
+                    <i class="tf-ion-ios-compose-outline"></i>
+                    <h3>Quoi</h3>
+                    <div>
+                        <span class="counter">
+                            {% for genre in record.genres %}
+                            {{genre.genre_title}}
+                            {% endfor%}</span>
+                    </div>
+
+                </div>
+            </div>
+            <!-- end third count item -->
+
+        </div> <!-- end row -->
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="google-map">
+                <div id="map" class="map_canvas" ></div>
+            </div>
+        </div>
+    </div> <!-- End row -->
+
+    
+</div> <!-- end container -->
+
+</section> <!-- end section -->
+
+
+<section class="about-2 section bg-light" id="inscription">
+    <div class="container">
+        <div class="row justify-content-center">
+            <!-- section title -->
+            <div class="col-xl-6 col-lg-8">
+                <div class="title text-center">
+                    <h2>Inscriptions</h2>
+                    <p>
+                        Grâce à votre inscription, la Banda pourra savoir si les effectifs sont suffisants pour l'événement prévu, ou s'il faut chercher des renforts.
+                    </p>
+                    <div class="border"></div>
+                </div>
+            </div>
+            <!-- /section title -->
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="team-skills-content">
+                    <h3 class="mb-3">Les musiciens ayant déjà répondu</h3>
+                    <ul class="comment-list" id="result">
+                        <!-- comment list -->
+                        <li class="comment-list-item">
+                            <div class="comment-list-item-image">
+                                <img loading="lazy" src="{{ 'assets/images/blog/comment-1.jpg'|theme }}" alt="comment-img">
+                            </div>
+                            <div class="comment-list-item-content">
+                                <h5>Présences</h5>
+                                <h6><ul class="checklist">
+                                    {% for presence in presencescount %}
+                                        <li>{{ presence }}</li>
+                                    {% endfor %}
+                                </ul></h6>
+                            </div>
+                        </li>
+                        <li class="comment-list-item">
+                            <div class="comment-list-item-image">
+                                <img loading="lazy" src="{{ 'assets/images/blog/comment-1.jpg'|theme }}" alt="comment-img">
+                            </div>
+                            <div class="comment-list-item-content">
+                                <h5>Absences</h5>
+                                <h6> 
+                                    <ul class="checklist">
+                                        <li>{% for absence in absencescount %}{{ absence }},&nbsp;{% endfor %}</li>
+                                    <ul>
+                                </h6>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Inscription Form -->
+            <div class="contact-form col-md-6 ">
+
+                <h3 class="mb-3">Inscrivez vous</h3>
+
+                <form id="inscription-form" data-request="inscriptionform::onSend">
+                    
+                    <div class="form-group mb-4">
+                        <select class="form-control custom-select" name="user">
+                                <option value={{user.id}}>{{user.name}}</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group mb-4">
+                        <select class="form-control custom-select" name="instrument">
+                            {% for instrument in inscriptionform.loadinstruments  %}
+                                <option value={{instrument.id}}>{{instrument.name}}</option>
+                                {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group mb-4">
+                        <select class="form-control custom-select" name="position">
+                            <option selected="selected" value="1">Sera présent à {{record.name}}</option>
+                            <option value="0">Ne sera pas présent à {{record.name}}</option>
+                        </select>
+                    </div>
+
+             
+                    <select class="hidden" name="event" >
+                            <option value={{record.id}}></option>
+                    </select>
+                
+
+                    <div id="cf-submit">
+                        <input type="submit" id="contact-submit" class="btn btn-transparent" value="Enregistrer">
+                    </div>
+
+                </form>
+
+                {% for error in errors %}
+                    {{ error }}
+                {% endfor %}
+            </div>
+            <!-- ./End Inscription Form -->
+
+        </div> <!-- End row -->
+
+
+    </div> <!-- end container -->
+
+</section> <!-- end section -->
+
+
+<!-- leaflet library -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.3/leaflet.js"></script>
+<script type="text/javascript" src="https://tiles.unwiredmaps.com/js/leaflet-unwired.js"></script>
+
+
+<script type="text/javascript">
+    // Maps access token goes here
+    var key = 'pk.9d11a072204bf3ef4a9fd9abfd91e502';
+
+    // Add layers that we need to the map
+    var streets = L.tileLayer.Unwired({key: key, scheme: "streets"});
+
+    // Initialize the map
+    var map = L.map('map', {
+        center: [{{record.locations[0].latitude}}, {{record.locations[0].longitude}}], // Map loads with this location as center
+        zoom: 15,
+        scrollWheelZoom: true,
+        layers: [streets],
+        zoomControl: false
+    });
+	
+    var myIcon = L.icon({
+    iconUrl: "{{'/assets/images/favicon.png'|theme}}",
+    iconSize: [20, 20]
+    });
+
+    // Add a 'marker'
+    var marker = L.marker([{{record.locations[0].latitude}}, {{record.locations[0].longitude}}], {draggable: true, icon: myIcon} )
+        .addTo(map)
+        .bindPopup("{{record.name}}")
+        .openPopup();
+
+    // Add a 'popup'
+    var popup = L.popup()
+        .setLatLng([{{record.locations[0].latitude}}, {{record.locations[0].longitude}}]);
+
+
+</script>
+
+{% else %}
+    {{ notFoundMessage }}
+{% endif %}

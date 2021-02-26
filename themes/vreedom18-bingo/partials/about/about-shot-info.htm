@@ -1,0 +1,45 @@
+description = "About Shot Info Partial"
+==
+<section class="about-shot-info section-sm">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 mt-20">
+                <h2 class="mb-3">Nous, la Band'Aqui</h2>
+                <p>
+                    La Band’aqui est une association loi de 1901; créée en mars 2006.
+
+                </p>
+                <p>
+                    Son Président est Françis Sansas, et son siège est située à Lanton (33 138).
+                </p>
+                <p>
+                    Si vous avez envie de nous rejoindre, n'hésitez pas à nous envoyer un message via notre page 
+                    <a href="{{ 'contact'|page }}" class="">Contact</a>.
+                </p>
+
+            </div>
+            <div class="col-lg-6 mt-4 mt-lg-0">
+                <div class="text-center">
+                    <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;" src="{{'assets/images/undraw_having_fun_iais.svg'|theme}}" alt="">           
+                </div>
+            </div>
+        </div>
+ 
+        <div class="row">
+            <div class="col-md-12 mt-4">
+                <div id="clients-slider" class="clients-logo-slider">
+
+                        {% for user in users %}
+                            <img loading="lazy" src="{{ user.avatar.thumb(270,160, {'mode':'crop'}) }}" alt="">
+                            <img loading="lazy" src="{{ 'assets/images/client-logo/logo1.png'|theme }}" alt="">
+                            <img loading="lazy" src="{{ 'assets/images/client-logo/logo1.png'|theme }}" alt="">
+                        {% else %}
+                            <li class="no-data">{{ 'No User' }}</li>
+                        {% endfor %}
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>

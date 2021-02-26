@@ -1,0 +1,23 @@
+title = "Search"
+url = "/search"
+layout = "default"
+is_hidden = 0
+
+[searchResults]
+resultsPerPage = 10
+showProviderBadge = 1
+noResultsMessage = "Your search returned no results."
+visitPageMessage = "Visit page"
+==
+{% partial 'site/sp-header' %}
+{% set results = searchResults.results %}
+
+{% for result in results %}
+    {# Display all results #}
+    {% partial searchResults ~ '::searchresult.htm' result = result %}
+{% else %}
+    {# No results found #}
+    {% partial searchResults ~ '::no-results.htm' %}
+{% endfor %}
+
+{% partial searchResults ~ '::pagination.htm' results = results %}

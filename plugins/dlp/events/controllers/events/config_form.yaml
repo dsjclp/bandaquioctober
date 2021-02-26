@@ -1,0 +1,10 @@
+name: Events
+form: $/dlp/events/models/event/fields.yaml
+modelClass: Dlp\Events\Models\Event
+defaultRedirect: dlp/events/events
+create:
+    redirect: 'dlp/events/events/update/:id'
+    redirectClose: dlp/events/events
+update:
+    redirect: dlp/events/events
+    redirectClose: dlp/events/events

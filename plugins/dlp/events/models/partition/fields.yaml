@@ -1,0 +1,40 @@
+fields:
+    name:
+        label: Name
+        span: auto
+        type: text
+    slug:
+        label: Slug
+        span: auto
+        preset:
+            field: name
+            type: slug
+        type: text
+    genres:
+        label: Genres
+        nameFrom: genre_title
+        descriptionFrom: description
+        span: auto
+        type: relation
+    description:
+        label: Description
+        size: ''
+        span: auto
+        type: textarea
+    serie:
+        label: Série
+        span: auto
+        type: number
+tabs:
+    fields:
+        gallery:
+            label: Galerie
+            mode: file
+            fileTypes: pdf
+            useCaption: true
+            thumbOptions:
+                mode: crop
+                extension: auto
+            span: auto
+            type: fileupload
+            tab: 'Tab 1'

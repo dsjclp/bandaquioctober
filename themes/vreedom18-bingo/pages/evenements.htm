@@ -1,0 +1,85 @@
+title = "Evenements"
+url = "/evenements"
+layout = "default"
+is_hidden = 0
+
+[siteSearchInclude]
+
+
+==
+<?php
+use  Dlp\Events\Models\Event;
+
+function onStart()
+{
+$this['records'] = Event::where('public', '=', 1)->where('time_begin', '>', now())->orderBy('time_begin','asc')->get();
+
+}
+?>
+==
+{% partial 'site/sp-header' %}
+
+
+<section class="team" id="team">
+    <div class="container">
+        <div class="row justify-content-center">
+            <!-- section title -->
+            <div class="col-xl-6 col-lg-8">
+                <div class="title text-center ">
+                    <h2>Les prochains événements</h2>
+                    <h4>
+                        Inscrivez vous !
+                    </h4>
+                    <div class="border"></div>
+                </div>
+            </div>
+            <!-- /section title -->
+        </div>
+        <div class="row">
+            {% for record in records %}
+            
+            <!-- team member -->
+            <div class="col-lg-4 col-md-6">
+                <div class="team-member text-center">
+                    <div class="member-photo">
+                        {% if record.poster %}
+                        <!-- photo -->
+                        <img loading="lazy" class="img-fluid" src="{{ record.poster.thumb(1170,880, {'mode':'crop'}) }}"
+                            alt="Poster">
+                        <!-- /photo -->
+                        {% else %}
+                        <img loading="lazy" class="img-fluid" src="{{'assets/images/undraw_compose_music_ovo2.svg'|theme}}"
+                        alt="Poster">
+                        {% endif %}
+                        <!-- member social profile -->
+                        <div class="mask">
+                            <ul class="clearfix">
+                                <li><a href=""><i class="tf-ion-ios-search-strong"></i></a></li>
+                            </ul>
+                        </div>
+                        <!-- /member social profile -->
+                    </div>
+
+                    <!-- member name & designation -->
+                    <div class="member-content">
+                        <h3><a href="/evenement/{{ record.slug }}">{{ record.name }}</a></h3>
+                       <p> à
+                            {% for location in record.locations %}
+                            <a href="/lieu/{{location.slug}}">{{location.name}}</a>
+                            {% endfor%}
+                        
+                            le {{ record.time_begin|frenchDate('%e %B %Y') }} {{record.description|raw}}
+                        </p>
+                    </div>
+                    <!-- /member name & designation -->
+
+                </div>
+            </div>
+            <!-- end team member -->
+            {% else %}
+            <li class="no-data">{{ noRecordsMessage }}</li>
+        {% endfor %}
+
+        </div> <!-- End row -->
+    </div> <!-- End container -->
+</section> <!-- End section -->

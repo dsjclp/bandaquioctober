@@ -1,0 +1,10 @@
+columns:
+    name:
+        label: name
+        type: text
+    latitude:
+        label: latitude
+        type: text
+    longitude:
+        label: longitude
+        type: text

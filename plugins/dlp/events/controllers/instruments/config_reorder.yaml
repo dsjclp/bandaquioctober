@@ -1,0 +1,4 @@
+title: Instruments
+modelClass: Dlp\Events\Models\Instrument
+toolbar:
+    buttons: reorder_toolbar

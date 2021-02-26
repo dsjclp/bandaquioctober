@@ -1,0 +1,71 @@
+title = "Photos"
+url = "/photos"
+layout = "default"
+is_hidden = 0
+==
+<?php
+use  Dlp\Events\Models\Event;
+
+function onStart()
+{
+$this['events'] = Event::where('public', '=', 1)->where('time_begin', '<', now())->orderBy('time_begin','desc')->take(7)->get();
+
+}
+?>
+==
+{% partial 'site/sp-header' %}
+
+<section class="portfolio section-sm" id="portfolio">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-xl-6 col-lg-8">
+                <!-- section title -->
+                <div class="title text-center">
+                    <h2>Nos dernières photos</h2>
+                    <p>
+                        Petit aperçu de la banda, sans le son...
+                    </p>
+                    <div class="border"></div>
+                </div>
+                <!-- /section title -->
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+
+                <div class="portfolio-filter">
+                    <button type="button" data-filter="all">Toutes</button>
+                    {% for event in events %}
+                    <button type="button" data-filter="{{event.name}}">{{event.name}}</button>
+                    {% endfor%}
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <div class="filtr-container">
+                            {% for event in events %}
+                                {% for image in event.gallery %}
+                                    <div class="col-md-3 col-sm-6 col-xs-6 filtr-item " data-category="{{event.name}}">
+                                        <div class="portfolio-block">
+                                            <img class="img-fluid" src="{{image.thumb(400,200,{'mode':'crop'})}}"
+                                                alt="">
+                                            <div class="caption">
+                                                <a class="search-icon"
+                                                    href="{{image.thumb(1200,800,{'mode':'crop'})}}"
+                                                    data-lightbox="image-1">
+                                                    <i class="tf-ion-ios-search-strong"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor%}
+                            {% endfor%}
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- /end col-lg-12 -->
+        </div> <!-- end row -->
+
+    </div> <!-- end container -->
+</section> <!-- End section -->>

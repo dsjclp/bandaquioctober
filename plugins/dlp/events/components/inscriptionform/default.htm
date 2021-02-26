@@ -1,0 +1,55 @@
+
+
+{% for instrument in inscriptionform.loadinstruments  %}
+{{ instrument.name }}<br>
+{% endfor %}
+
+<!-- Contact Form -->
+          <div class="contact-form col-md-6 ">
+
+            <form data-request="inscriptionform::onSend">
+               
+                <label>Position</label>
+                <div class="form-group mb-4">
+                    <input type="number" class="form-control" name="position">
+                </div>
+
+                <label>Evénement</label>
+                <select class="form-control custom-select" name="event">
+                    {% for event in inscriptionform.loadevents  %}
+                        <option value={{event.id}}>{{event.name}}</option>
+                        {% endfor %}
+                </select>
+                
+                <label>Instrument</label>
+                <select class="form-control custom-select" name="instrument">
+                    {% for instrument in inscriptionform.loadinstruments  %}
+                        <option value={{instrument.id}}>{{instrument.name}}</option>
+                        {% endfor %}
+                </select>
+
+                <label>User</label>
+                <select class="form-control custom-select" name="user">
+                    {% for user in inscriptionform.loadusers  %}
+                        <option value={{user.id}}>{{user.name}}</option>
+                        {% endfor %}
+                </select>
+
+                <div>
+                    <button type="submit">Send</button>
+                </div>
+
+            </form>
+
+            <div id="result"></div>
+
+            {% for error in errors.all() %}
+                {{ error }}
+            {% endfor %}
+
+        </div>
+        <!-- ./End Contact Form -->
+
+        {% flash success %}
+        <p>{{message}}</p>
+    {% endflash %}

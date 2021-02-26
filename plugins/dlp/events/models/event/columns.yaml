@@ -1,0 +1,26 @@
+columns:
+    name:
+        label: name
+        type: text
+    time_begin:
+        label: time_begin
+        type: text
+    time_end:
+        label: time_end
+        type: text
+    description:
+        label: description
+        type: text
+    genres:
+        label: Genres
+        type: text
+        select: genre_title
+        relation: genres
+    locations:
+        label: Lieux
+        type: text
+        select: name
+        relation: locations
+    public:
+        label: Public
+        type: switch

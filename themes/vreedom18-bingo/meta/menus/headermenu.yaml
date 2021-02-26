@@ -1,0 +1,76 @@
+items:
+    -
+        title: Accueil
+        nesting: null
+        type: cms-page
+        url: null
+        code: ''
+        reference: accueil
+        cmsPage: null
+        replace: null
+        viewBag:
+            isHidden: '0'
+            cssClass: ''
+            isExternal: '0'
+    -
+        title: Infos
+        nesting: null
+        type: cms-page
+        url: null
+        code: ''
+        reference: about
+        cmsPage: null
+        replace: null
+        viewBag:
+            isHidden: '0'
+            cssClass: ''
+            isExternal: '0'
+    -
+        title: Photos
+        nesting: null
+        type: cms-page
+        url: null
+        code: ''
+        reference: portfolio
+        cmsPage: null
+        replace: null
+        viewBag:
+            isHidden: '0'
+            cssClass: ''
+            isExternal: '0'
+    -
+        title: Privé
+        nesting: null
+        type: cms-page
+        url: null
+        code: ''
+        reference: prive
+        cmsPage: null
+        replace: null
+        viewBag:
+            isHidden: '0'
+            cssClass: ''
+            isExternal: '0'
+    -
+        title: Login
+        nesting: null
+        type: cms-page
+        url: null
+        code: ''
+        reference: login
+        cmsPage: null
+        replace: null
+        viewBag:
+            isHidden: '0'
+            cssClass: ''
+            isExternal: '0'
+    -
+        title: Contact
+        type: cms-page
+        code: ''
+        reference: contact
+        viewBag:
+            isHidden: '0'
+            cssClass: ''
+            isExternal: '0'
+name: 'Header Menu'

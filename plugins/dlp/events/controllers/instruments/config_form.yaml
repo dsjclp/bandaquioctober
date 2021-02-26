@@ -1,0 +1,10 @@
+name: Instruments
+form: $/dlp/events/models/instrument/fields.yaml
+modelClass: Dlp\Events\Models\Instrument
+defaultRedirect: dlp/events/instruments
+create:
+    redirect: 'dlp/events/instruments/update/:id'
+    redirectClose: dlp/events/instruments
+update:
+    redirect: dlp/events/instruments
+    redirectClose: dlp/events/instruments

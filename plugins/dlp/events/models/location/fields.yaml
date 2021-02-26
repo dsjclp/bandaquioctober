@@ -1,0 +1,39 @@
+fields:
+    name:
+        label: 'Nom du lieu'
+        span: full
+        type: text
+    description:
+        label: Description
+        size: ''
+        span: full
+        type: textarea
+    latitude:
+        label: Latitude
+        span: left
+        type: number
+    longitude:
+        label: Longitude
+        span: right
+        type: number
+    slug:
+        label: Slug
+        span: auto
+        preset:
+            field: name
+            type: slug
+        type: text
+tabs:
+    fields:
+        poster:
+            label: Poster
+            mode: image
+            imageWidth: '100'
+            imageHeight: '100'
+            useCaption: true
+            thumbOptions:
+                mode: crop
+                extension: auto
+            span: auto
+            type: fileupload
+            tab: 'Tab 1'

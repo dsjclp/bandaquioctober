@@ -1,0 +1,30 @@
+
+<ul class="comment-list" id="result">
+    <!-- comment list -->
+    <li class="comment-list-item">
+        <div class="comment-list-item-image">
+            <img loading="lazy" src="{{ 'assets/images/blog/comment-1.jpg'|theme }}" alt="comment-img">
+        </div>
+        <div class="comment-list-item-content">
+            <h5>Présences</h5>
+            <h6><ul class="checklist">
+                {% for presence in presencescount %}
+                    <li>{{ presence }}</li>
+                {% endfor %}
+            </ul></h6>
+        </div>
+    </li>
+    <li class="comment-list-item">
+        <div class="comment-list-item-image">
+            <img loading="lazy" src="{{ 'assets/images/blog/comment-1.jpg'|theme }}" alt="comment-img">
+        </div>
+        <div class="comment-list-item-content">
+            <h5>Absences</h5>
+            <h6> 
+                <ul class="checklist">
+                    <li>{% for absence in absencescount %}{{ absence }},&nbsp;{% endfor %}</li>
+                <ul>
+            </h6>
+        </div>
+    </li>
+</ul>

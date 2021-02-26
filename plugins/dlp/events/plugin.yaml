@@ -1,0 +1,32 @@
+plugin:
+    name: 'dlp.events::lang.plugin.name'
+    description: 'dlp.events::lang.plugin.description'
+    author: Dlp
+    icon: oc-icon-calendar
+    homepage: ''
+navigation:
+    main-menu-item:
+        label: Evénements
+        url: dlp/events/events
+        icon: icon-calendar
+        sideMenu:
+            side-menu-item:
+                label: Genres
+                url: dlp/events/genres
+                icon: icon-tag
+            side-menu-item2:
+                label: Lieux
+                url: dlp/events/locations
+                icon: icon-map-marker
+            side-menu-item3:
+                label: Instruments
+                url: dlp/events/instruments
+                icon: icon-music
+            side-menu-item4:
+                label: Inscriptions
+                url: dlp/events/inscriptions
+                icon: icon-pencil
+            side-menu-item5:
+                label: Partitions
+                url: dlp/events/partitions
+                icon: icon-file-pdf-o

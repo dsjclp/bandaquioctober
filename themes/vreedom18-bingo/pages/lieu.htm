@@ -1,0 +1,133 @@
+title = "Lieu"
+url = "/lieu/:slug"
+layout = "default"
+is_hidden = 0
+
+[builderDetails]
+modelClass = "Dlp\Events\Models\Location"
+identifierValue = "{{ :slug }}"
+modelKeyColumn = "slug"
+displayColumn = "name"
+notFoundMessage = "Record not found"
+
+[siteSearchInclude]
+==
+{% partial 'site/sp-header' %}
+{% set record = builderDetails.record %}
+{% set displayColumn = builderDetails.displayColumn %}
+{% set notFoundMessage = builderDetails.notFoundMessage %}
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.3/leaflet.css" rel="stylesheet" type="text/css"/>
+
+
+{% if record %}
+
+
+
+<section class="team" id="location">
+    <div class="container">
+        <div class="row justify-content-center">
+            <!-- section title -->
+            <div class="col-xl-6 col-lg-8">
+                <div class="title text-center ">
+                    <h2>{{record.name}}</h2>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque quasi tempora obcaecati,
+                        quis similique quos.
+                    </p>
+                    <label for="latitude">Latitude:</label>
+                    <input id="latitude" type="text" value={{record.latitude}} />
+                    <label for="longitude">Longitude:</label>
+                    <input id="longitude" type="text" value={{record.longitude}} />
+                    <div class="border"></div>
+                </div>
+            </div>
+            <!-- /section title -->
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="google-map">
+                    <div id="map" class="map_canvas" ></div>
+                </div>
+            </div>
+        </div> <!-- End row -->
+    </div> <!-- End container -->
+</section> <!-- End section -->
+
+
+<!-- leaflet library -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.3/leaflet.js"></script>
+<script type="text/javascript" src="https://tiles.unwiredmaps.com/js/leaflet-unwired.js"></script>
+
+<!-- location control -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.css" />
+<!-- location control -->
+<script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol/dist/L.Control.Locate.min.js" charset="utf-8"></script>
+<!-- geocoding plugin -->
+<link rel="stylesheet" href="https://maps.locationiq.com/v2/libs/leaflet-geocoder/1.9.5/leaflet-geocoder-locationiq.min.css">
+<script src="https://maps.locationiq.com/v2/libs/leaflet-geocoder/1.9.5/leaflet-geocoder-locationiq.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-plugins/3.0.2/control/Permalink.js"></script>
+
+<script type="text/javascript">
+    // Maps access token goes here
+    var key = 'pk.9d11a072204bf3ef4a9fd9abfd91e502';
+
+    // Add layers that we need to the map
+    var streets = L.tileLayer.Unwired({key: key, scheme: "streets"});
+
+    // Initialize the map
+    var rememberLat = document.getElementById('latitude').value;
+    var rememberLong = document.getElementById('longitude').value;
+    var map = L.map('map', {
+        center: [rememberLat, rememberLong],
+        zoom: 14,
+        scrollWheelZoom: true,
+        layers: [streets],
+        zoomControl: false
+    });
+	
+    var myIcon = L.icon({
+    iconUrl: 'https://i.ibb.co/sJrMTdz/favicon-32x32.png',
+    iconSize: [20, 20]
+    });
+
+    // Add a 'marker'
+    var marker = L.marker([rememberLat, rememberLong], {draggable: true, icon: myIcon} )
+        .addTo(map)
+        .bindPopup("Votre lieu")
+        .openPopup();
+
+
+    var popup = L.popup()
+        .setLatLng([rememberLong, rememberLong]);
+
+
+    // Add the 'zoom' control
+    L.control.zoom({
+        position:'topright'
+    }).addTo(map);
+
+    // Add the 'scale' control
+    L.control.scale().addTo(map);
+    L.control.locate({
+        position: "bottomright"
+    }).addTo(map);
+
+
+</script>
+
+
+<h3>Evénements</h3>
+    
+<ul class = "">
+    {% for event in record.events %}
+        {{event.name}}<br>
+    {% endfor%}
+</ul>
+
+
+{% else %}
+    {{ notFoundMessage }}
+{% endif %}

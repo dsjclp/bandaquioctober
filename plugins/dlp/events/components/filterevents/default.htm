@@ -1,0 +1,45 @@
+
+
+<h2>Liste des events : base default.htm du component filterevents</h2>
+
+COUCOU FILTER
+
+{% set events = filterevents.events %}
+{% set genres = filterevents.genres %}
+
+
+                <form action="{{url('evenements')}}" method="get">
+            <div>
+                <label>Nom de l'événement</label>
+                <select name="name">
+                    <option value="">Any</option>
+                    <option value="Festibandas">Festibandas</option>
+                    <option value="Fêtes du Porge">Fêtes du Porge</option>
+                </select>
+                <label>Genre de l'événement</label>
+                <select name="genre">
+                    <option value="">Any</option>
+{% for genre in genres %}
+<option value="{{genre.slug}}">{{genre.genre_title}}</option>
+{% endfor %}
+                </select>
+            </div>
+            
+
+            <button type="submit">Filter</button>
+
+
+        </form>
+
+{% for event in events %}
+    {{event.name}}
+    {% for genre in event.genres%}
+        <small>{{genre.genre_title}}</small>
+    {% endfor %}
+    {% for location in event.locations%}
+        <small>{{location.name}}</small>
+    {% endfor %}
+    <br>
+{% endfor %}
+
+{{url('evenements')}}

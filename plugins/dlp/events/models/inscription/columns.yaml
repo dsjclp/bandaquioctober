@@ -1,0 +1,19 @@
+columns:
+    user_id:
+        label: Musicien
+        type: number
+        select: name
+        relation: user
+    event_id:
+        label: Evénement
+        type: number
+        select: name
+        relation: event
+    instrument_id:
+        label: Instrument
+        type: number
+        select: name
+        relation: instrument
+    position:
+        label: Position
+        type: switch
