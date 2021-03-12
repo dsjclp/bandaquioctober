@@ -1,0 +1,172 @@
+title = "Forum member"
+url = "/forum/member/:slug"
+layout = "default"
+is_hidden = 0
+
+[forumMember]
+slug = "{{ :slug }}"
+channelPage = "forum/channel"
+topicPage = "forum/topic"
+includeStyles = 1
+==
+<?php
+function onEnd()
+{
+    $this->page->title = "Participant au Forum : ".$this['member']->username;
+}
+?>
+==
+{% partial 'site/sp-header' %}
+
+<section class="posts section">
+    <div class="container">
+    
+            <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <!-- section title -->
+                <div class="title text-center">
+                    <h2>{{channel.title}}</h2>
+                    <p>{{channel.description}}</p>
+                    <div class="border"></div>
+                </div>
+                <!-- /section title -->
+            </div>
+        </div>
+
+
+
+{% flash %}
+    <div class="alert alert-{{ type == 'error' ? 'danger' : type }}">
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    </div>
+{% endflash %}
+
+{% if forumMember.member %}
+
+    <div class="row">
+        <div class="col-md-3 col-md-push-9">
+
+            <div id="memberControlPanel">
+
+
+                <div class="panel">
+                    <div class="list-group">
+                
+                        {% if otherMember.is_moderator %}
+                            <a
+                                href="javascript:;"
+                                class="list-group-item"
+                                data-request="onApprove"
+                                data-request-update="'@controlpanel': '#memberControlPanel'">
+                                {% if not member.is_approved %}
+                                    Approve member
+                                {% else %}
+                                    Unapprove member
+                                {% endif %}
+                            </a>
+                            <a
+                                href="javascript:;"
+                                class="list-group-item"
+                                data-request="onBan"
+                                data-request-update="'@controlpanel': '#memberControlPanel'">
+                                {% if member.is_banned %}
+                                    Unban member
+                                {% else %}
+                                    Ban member
+                                {% endif %}
+                            </a>
+                            <a
+                                href="javascript:;"
+                                class="list-group-item"
+                                data-request="onPurgePosts"
+                                data-request-confirm="Are you sure? This will delete all posts by this member.">
+                                Purge posts
+                            </a>
+                        {% else %}
+
+                        {% endif %}
+                
+                        {% if canEdit %}
+                            <a
+                                href="{{ this.page.baseFileName|page }}?mode=edit"
+                                class="list-group-item">
+                                Modifier details
+                            </a>
+                        {% endif %}
+                
+                        <div class="list-group-item">
+                            <i class="fa fa-eye icon-comments"></i> {{ member.count_posts }} messages
+                        </div>
+                
+                    </div>
+                </div>
+
+
+
+
+
+            </div>
+
+        </div>
+
+
+
+
+
+        <div class="col-md-9 col-md-pull-3">
+            {% if mode == 'edit' %}
+                {% partial forumMember ~ '::update' %}
+            {% else %}
+
+
+
+
+
+            
+
+
+            <div class="rainlab-forum">
+                <h5>
+                    {{ member.username }}
+                </h5>
+                <p>
+                    <img src="{{ member.user.avatarThumb(50) }}" />
+                </p>
+                <p>Membre depuis : {{ member.created_at|date('M Y') }}</p>
+                {% if not member.is_approved %}
+                    <p></p>
+                {% endif %}
+                {% if member.is_banned %}
+                    <p>{{ member.username }} has been banned from posting</p>
+                {% endif %}
+                {% if member.is_moderator %}
+                    <p>{{ member.username }} is a forum moderator</p>
+                {% endif %}
+            
+                <h4>Messages récents</h4>
+                {% partial '@recentposts' %}
+                
+            </div>
+
+
+
+
+
+
+
+            {% endif %}
+        </div>
+    </div>
+
+{% else %}
+
+    <p>Forum member not found</p>
+
+{% endif %}
+
+
+
+
+    </div>
+</section>

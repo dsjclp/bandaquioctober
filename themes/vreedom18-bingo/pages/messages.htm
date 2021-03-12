@@ -18,9 +18,22 @@ pageNumber = "{{ :page }}"
 ==
 {% partial 'site/sp-header' %}
 
-
 <section class="posts section">
     <div class="container">
+
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <!-- section title -->
+                <div class="title text-center">
+                    <h2>Messages</h2>
+                    <p>Retrouvez ici les messages du Bureau.</p>
+                    <div class="border"></div>
+                </div>
+                <!-- /section title -->
+            </div>
+        </div>
+
+
         <div class="row">
             <!-- /section title -->
             {% for post in records %}
@@ -28,9 +41,17 @@ pageNumber = "{{ :page }}"
             <article class="col-lg-4 col-md-6">
                 <div class="post-item">
                     <div class="media-wrapper">
-                        <img loading="lazy" src="{{ 'assets/images/undraw_Opened_re_i38e.svg'|theme }}" alt="amazing caves coverimage"
-                            class="img-fluid" style="width: 15rem;">
-                    </div>
+                    {% if record.image %}
+                    <!-- photo -->
+                    <img loading="lazy" class="img-fluid" style="width: 10rem;" src="{{ record.immage.thumb(170,77, {'mode':'crop'}) }}"
+                        alt="Poster">
+                    <!-- /photo -->
+                    {% else %}
+                    <img loading="lazy" class="img-fluid" style="width: 10rem;" src="{{ 'assets/images/undraw_Opened_re_i38e.svg'|theme }}"
+                    alt="Poster">
+                    {% endif %}
+
+                </div>
 
                     <div class="content">
                         <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
@@ -49,7 +70,7 @@ pageNumber = "{{ :page }}"
                             {% endif %}
                         </p>
                         <p class="excerpt">{{ post.summary | raw }}</p>
-                        <a class="btn btn-main" href="{{ detailsPage|page({ (detailsUrlParameter): attribute(post, detailsKeyColumn) }) }}">Read more</a>
+                        <a class="btn btn-main" href="{{ detailsPage|page({ (detailsUrlParameter): attribute(post, detailsKeyColumn) }) }}">En savoir plus</a>
                     </div>
                 </div>
             </article>

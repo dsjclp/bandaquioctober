@@ -114,3 +114,21 @@
 1.0.39:
     - 'Updated table dlp_events_partitions'
     - builder_table_update_dlp_events_partitions_4.php
+1.0.40:
+    - 'Created table dlp_events_instruments_users'
+    - builder_table_create_dlp_events_instruments_users.php
+1.0.41:
+    - 'Drop table dlp_events_instruments_users'
+    - builder_table_delete_dlp_events_instruments_users.php
+1.0.42:
+    - 'Drop table dlp_events_instruments'
+    - builder_table_delete_dlp_events_instruments_2.php
+1.0.43:
+    - 'Drop table dlp_events_partitions_genres'
+    - builder_table_delete_dlp_events_partitions_genres.php
+1.0.44:
+    - 'Updated table dlp_events_partitions'
+    - builder_table_update_dlp_events_partitions_5.php
+1.0.45:
+    - 'Updated table dlp_events_locations'
+    - builder_table_update_dlp_events_locations_4.php

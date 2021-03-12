@@ -1,0 +1,8 @@
+fields:
+    strawpoll_mode:
+        label: 'papangproduction.strawpoll::lang.settings.strawpollMode'
+        type: radio
+        options:
+            0: 'papangproduction.strawpoll::lang.settings.configurable'
+            1: 'papangproduction.strawpoll::lang.settings.anonymous'
+            2: 'papangproduction.strawpoll::lang.settings.public'

@@ -1,7 +1,7 @@
 {{ form_open({ request: 'onCreate' }) }}
 
     <div class="form-group">
-        <label for="topicSubject" class="control-label">Subject</label>
+        <label for="topicSubject" class="control-label">Sujet</label>
         <input
             id="topicSubject"
             name="subject"
@@ -11,15 +11,14 @@
     </div>
 
     <div class="form-group">
-        <label for="topicContent" class="control-label">Content</label>
+        <label for="topicContent" class="control-label">Contenu</label>
         <textarea
             id="topicContent"
             name="content"
             rows="8"
             type="text"
             class="form-control">{{ post('content') }}</textarea>
-        <span class="help-block">You can use <a href="http://daringfireball.net/projects/markdown/syntax" target="_blank">Markdown</a> syntax.</span>
-    </div>
+   </div>
 
     <div class="form-group post-buttons">
         <button type="submit" class="btn btn-primary btn-lg">Post this topic</button>

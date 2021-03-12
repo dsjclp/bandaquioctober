@@ -1,0 +1,127 @@
+title = "Forum channel"
+url = "/forum/channel/:slug"
+layout = "default"
+description = "Specific forum channel"
+is_hidden = 0
+
+[forumChannel]
+slug = "{{ :slug }}"
+memberPage = "forum/member"
+topicPage = "forum/topic"
+includeStyles = 1
+==
+<?php
+function onEnd()
+{
+    if ($this['channel'])
+    {$this->page->title = "Discussion : ".$this['channel']->title;}
+}
+?>
+==
+{% partial 'site/sp-header' %}
+
+<section class="posts section">
+    <div class="container">
+
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <!-- section title -->
+                <div class="title text-center">
+                    <h2>{{channel.title}}</h2>
+                    <p>{{channel.description}}</p>
+                    <div class="border"></div>
+                </div>
+                <!-- /section title -->
+            </div>
+        </div>
+
+        <div class="rainlab-forum">
+        
+        
+                <div class="row">
+                    <p>&larr; <a href="{{ 'forum'|page }}">Retour à la liste des discussions</a></p>
+                </div>
+                
+                
+            <div class="row">
+
+                <div class="col-md-9">
+                    {{ form_open({ method: 'get' })}}
+                        <div class="search-box">
+                            <input type="text" name="search" class="form-control" placeholder="Recherchez des sujets" value="{{ input('search')|e }}">
+                        </div>
+                    {{ form_close() }}
+                </div>
+                <div class="col-md-6 mt-3 mb-3">
+                    {% if isGuest %}
+                        <p>Log in to Post a new topic</p>
+                    {% else %}
+                        <a href="{{ topicPage|page }}?channel={{ channel.id }}" class="btn btn-main btn-block">
+                            Publiez un nouveau sujet
+                        </a>
+                    {% endif %}
+                </div>
+
+            </div>
+
+        
+    <table class="forum-table">
+        <tr>
+            <th colspan="2">Sujet</th>
+            <th class="counter-column">Réponses</th>
+            <th class="counter-column">Vues</th>
+            <th class="activity-column">Dernière publication</th>
+        </tr>
+    
+        {% for topic in topics %}
+            <tr class="forum-topic">
+                <td class="indicator-column">
+                    <div class="topic-indicator {{ topic.hasNew ? 'has-new' }}"></div>
+                </td>
+                <td>
+                    <h5>
+                        {% if topic.is_sticky %}<strong>Sticky:</strong>{% endif %}
+                        {% if topic.is_locked %}<i class="icon icon-lock"></i> <strong>Locked:</strong>{% endif %}
+                        <a href="{{ topic.url }}">{{ topic.subject }}</a>
+                        <br/><small>par <a href="{{ topic.start_member.url }}">{{ topic.start_member.username }}</a></small>
+                    </h5>
+                </td>
+                <td class="counter-column">
+                    <p>{{ (topic.count_posts-1) }}</p>
+                </td>
+                <td class="counter-column">
+                    <p>{{ topic.count_views }}</p>
+                </td>
+                <td class="activity-column">
+                    <p>
+                        
+                        <img src="{{ topic.last_post_member.user.avatarThumb(24) }}" class="member-avatar" />
+                        par
+                        <a href="{{ topic.last_post_member.url }}">{{ topic.last_post_member.username }}</a>
+                        <small>
+                            <a href="{{ topic.url }}?page=last#post-{{ topic.last_post_id }}">
+                            
+    
+                                {% partial "@timestamp" date=topic.last_post_at %}
+                            </a>
+                        </small>
+                    </p>
+                </td>
+            </tr>
+        {% endfor %}
+    
+        {% if not topics|length %}
+            <tr>
+                <td colspan="100">There are no topics in this channel.</td>
+            </tr>
+        {% endif %}
+    </table>
+
+
+            {% if topics %}
+                {% partial "@pagination" %}
+            {% endif %}
+        </div>
+
+    </div>
+</section>

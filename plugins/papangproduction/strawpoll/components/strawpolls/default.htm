@@ -1,0 +1,61 @@
+{% set publishedStrawpolls = __SELF__.publishedStrawpolls %}
+{% set finishedStrawpolls = __SELF__.finishedStrawpolls %}
+
+<ul class="nav nav-tabs center">
+    <li role="presentation" class="active"><a href="#inProgress" role="tab" data-toggle="tab">{{ 'papangproduction.strawpoll::lang.view.current_strawpolls'|trans }}</a></li>
+    <li role="presentation"><a href="#finished" role="tab" data-toggle="tab">{{ 'papangproduction.strawpoll::lang.view.ended_strawpolls'|trans }}</a></li>
+</ul>
+<div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="inProgress">
+        <br/>
+        {% if publishedStrawpolls|length > 0 %}
+        <div class="col-md-4">            
+            <ul class="nav nav-pills strawpolls-list">
+                {% for key,strawpoll in publishedStrawpolls %}
+                <li role="presentation">
+                    <a data-request="{{ __SELF__ }}::onStrawpollSelected" data-request-update="'{{ __SELF__ }}::strawpoll': '#strawpoll_view'" data-request-data='"strawpollId": {{ strawpoll.id }}'>
+                    {{ key+1 }} >> {{ strawpoll.name }}
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>            
+        </div>
+        <div id="strawpoll_view" class="col-md-8">   
+        </div>
+        <script type="text/javascript">
+            $('.strawpolls-list a').on('click',function(e){
+                $('.strawpolls-list li').removeClass('active');
+                $(this).parent('li').addClass('active');
+            });
+        </script>  
+        {% else %}
+        <div class='alert alert-info'><span class="glyphicon glyphicon-info-sign"></span> {{ 'papangproduction.strawpoll::lang.view.no_current_strawpolls'|trans }}</div>
+        {% endif %}
+    </div>
+    <div role="tabpanel" class="tab-pane" id="finished">
+        <br/>
+        {% if finishedStrawpolls|length > 0 %}
+        <div class="col-md-4">            
+            <ul class="nav nav-pills strawpolls-list finished-items">
+                {% for key,finishStrawpoll in finishedStrawpolls %}
+                <li role="presentation">
+                    <a data-request="{{ __SELF__ }}::onStrawpollSelected" data-request-update="'{{ __SELF__ }}::strawpoll': '#strawpoll_view_finished'" data-request-data='"strawpollId": {{ finishStrawpoll.id }}'>
+                    >> {{ finishStrawpoll.name }}
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>            
+        </div>
+        <div id="strawpoll_view_finished" class="col-md-8">   
+        </div>
+        <script type="text/javascript">
+            $('.finished-items a').on('click',function(e){
+                $('.finished-items li').removeClass('active');
+                $(this).parent('li').addClass('active');
+            });
+        </script>   
+        {% else %}
+        <div class='alert alert-info'><span class="glyphicon glyphicon-info-sign"></span> {{ 'papangproduction.strawpoll::lang.view.no_ended_strawpolls'|trans }}</div>
+        {% endif %}
+    </div>
+</div>

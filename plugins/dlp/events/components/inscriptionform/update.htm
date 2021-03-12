@@ -1,30 +1,32 @@
 
-<ul class="comment-list" id="result">
-    <!-- comment list -->
-    <li class="comment-list-item">
-        <div class="comment-list-item-image">
-            <img loading="lazy" src="{{ 'assets/images/blog/comment-1.jpg'|theme }}" alt="comment-img">
-        </div>
-        <div class="comment-list-item-content">
-            <h5>Présences</h5>
-            <h6><ul class="checklist">
+    <ul class="widget-post-list">
+        <li class="widget-post-list-item">
+            <div class="widget-post-image">
+                <a href="{{ 'single-post'|page }}">
+                    <img loading="lazy" src="{{ 'assets/images/october.png'|theme }}" alt="post-img">
+                </a>
+            </div>
+            <div class="widget-post-content">
+                <h5>Présences : {{presencestotal}}</h5>
                 {% for presence in presencescount %}
-                    <li>{{ presence }}</li>
-                {% endfor %}
-            </ul></h6>
-        </div>
-    </li>
-    <li class="comment-list-item">
-        <div class="comment-list-item-image">
-            <img loading="lazy" src="{{ 'assets/images/blog/comment-1.jpg'|theme }}" alt="comment-img">
-        </div>
-        <div class="comment-list-item-content">
-            <h5>Absences</h5>
-            <h6> 
-                <ul class="checklist">
-                    <li>{% for absence in absencescount %}{{ absence }},&nbsp;{% endfor %}</li>
-                <ul>
-            </h6>
-        </div>
-    </li>
-</ul>
+                <h6><li> <i class="tf-ion-ios-musical-note"></i>&nbsp;&nbsp;{{ presence }}</h6>
+                 {% endfor %}
+            </div>
+        </li>
+        <p
+        data-control="flash-message"
+        class="flash-message fade success"
+        data-interval="5">
+        Votre réponse a été prise en compte, merci !
+        </p>
+        <hr class="mb-5 mt-5">
+        <li class="widget-post-list-item">
+            <div class="widget-post-image">
+                <img loading="lazy" src="{{ 'assets/images/absenceslogo.png'|theme }}" alt="post-img">
+            </div>
+            <div class="widget-post-content">
+                <h5>Absences : {{absencestotal}}</h5>
+                <h6>{% for absence in absencescount %}{{ absence }},&nbsp;{% endfor %}</h6>
+            </div>
+        </li>
+    </ul>

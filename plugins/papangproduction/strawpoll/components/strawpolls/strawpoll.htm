@@ -1,0 +1,84 @@
+{% set strawpoll = __SELF__.strawpoll %}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="strawpoll-description">
+        {{ strawpoll.description }}        
+        {% if strawpoll.published_end != null %}
+        <br><br>
+        <div class="strawpoll-publishedend">{{ 'papangproduction.strawpoll::lang.view.end_strawpoll'|trans }} {{ strawpoll.published_end }}</div>
+        {% endif %}
+        </div>
+    </div>
+</div>
+<hr>
+<div class="row text-center">
+    <div class="col-md-12">
+        {% if strawpoll.strawpoll_votes.count > 0 %}
+            <div
+                style="text-align:center;"   
+                {% for key, attribute in  strawpoll.getChartAttributes() %}
+                {{ key }}="{{ attribute }}"
+                {% endfor %}
+            >
+                <ul>        
+                    {% for choice in strawpoll.strawpoll_choices %}
+                    <li data-color="{{ choice.color }}">{{ choice.name }}<span>{{ choice.count() }}</span></li>               
+                    {% endfor %}        
+                </ul>
+            </div>
+        {% else %}
+            <div id="noVote">
+            {{ 'papangproduction.strawpoll::lang.view.no_votes'|trans }}
+            </div>
+        {% endif %}  
+    </div>
+</div>
+<hr>
+{% if can_vote %}
+<div class="row text-center">
+    <div class="col-md-12">        
+        <form id="strawpoll-form" data-request="{{ __SELF__ }}::onUserVoted" data-request-update="'{{ __SELF__ }}::strawpoll': '#strawpoll_view'" data-request-confirm="{{ 'papangproduction.strawpoll::lang.strawpollComponent.confirm'|trans }}" data-request-data='"strawpollId": {{ strawpoll.id }}'>
+            <div class="row">
+                <div class="col-md-6">
+                    {% for voteChoice in strawpoll.strawpoll_choices %}           
+                        <div class="radio" data-name="{{ voteChoice.name }}" data-description="{{ voteChoice.description }}">
+                            <label>
+                                <input type="radio" name="choice" value="{{voteChoice.id}}">
+                                {{voteChoice.name}}
+                            </label>
+                        </div> 
+                    {% endfor %} 
+                    <input type="submit" class="btn btn-success" value="{{ 'papangproduction.strawpoll::lang.strawpollComponent.submit'|trans }}"> 
+                </div>
+                <div class="col-md-6">
+                    <div class="choice-desc"></div>
+                </div>
+            </div>                       
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var choice_setted = false;
+    var choice_description = "";
+    $('#strawpoll-form input[type=radio][name=choice]').on('change', function(){
+        choice_setted = true;
+        $('.choice-desc').html(choice_description);
+    });
+    
+    $('#strawpoll-form .radio').on('mouseover', function(){
+        $('.choice-desc').addClass('choice-desc-box');
+        choice_description = '<strong>'+$(this).data('name') + '</strong> ' + $(this).data('description');
+        if (!choice_setted){
+            $('.choice-desc').html(choice_description);
+        }
+    });
+    
+    $('#strawpoll-form .radio').on('mouseout', function(){
+        if (!choice_setted){
+            $('.choice-desc').removeClass('choice-desc-box');
+        }
+    });
+</script>
+{% endif %}

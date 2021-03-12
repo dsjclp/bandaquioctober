@@ -1,0 +1,14 @@
+fields:
+    name:
+        label: 'papangproduction.strawpoll::lang.strawpollChoice.name'
+        span: full
+        type: text
+    description:
+        label: 'papangproduction.strawpoll::lang.strawpollChoice.description'
+        size: large
+        span: full
+        type: textarea
+    color:
+        label: 'papangproduction.strawpoll::lang.strawpollChoice.color'
+        span: full
+        type: colorpicker

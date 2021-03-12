@@ -35,6 +35,6 @@ class Inscription extends Model
     public $belongsTo = [
         'user' => ['Rainlab\User\\Models\User'],
         'event' => ['Dlp\Events\Models\Event'],
-        'instrument' => ['Dlp\Events\Models\Instrument'],
+        'instrument' => ['Rainlab\User\\Models\UserGroup'],
     ];
 }

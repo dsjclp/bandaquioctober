@@ -1,0 +1,11 @@
+columns:
+    name:
+        label: 'papangproduction.strawpoll::lang.strawpollChoice.name'
+        type: text
+        searchable: true
+        sortable: true
+    description:
+        label: 'papangproduction.strawpoll::lang.strawpollChoice.description'
+        type: text
+        searchable: true
+        sortable: true

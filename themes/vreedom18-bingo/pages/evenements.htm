@@ -3,18 +3,26 @@ url = "/evenements"
 layout = "default"
 is_hidden = 0
 
+[builderList]
+modelClass = "Dlp\Events\Models\Event"
+scope = "-"
+scopeValue = "{{ :scope }}"
+displayColumn = "name"
+noRecordsMessage = "No records found"
+detailsPage = "evenement"
+detailsKeyColumn = "slug"
+detailsUrlParameter = "slug"
+pageNumber = "{{ :page }}"
+
 [siteSearchInclude]
-
-
 ==
 <?php
 use  Dlp\Events\Models\Event;
 
 function onStart()
-{
-$this['records'] = Event::where('public', '=', 1)->where('time_begin', '>', now())->orderBy('time_begin','asc')->get();
-
-}
+    {
+        $this['records2'] = Event::where('public', '=', 1)->where('time_begin', '>', now())->orderBy('time_begin','asc')->get();
+    }
 ?>
 ==
 {% partial 'site/sp-header' %}
@@ -22,6 +30,12 @@ $this['records'] = Event::where('public', '=', 1)->where('time_begin', '>', now(
 
 <section class="team" id="team">
     <div class="container">
+    
+    
+    
+    {% component 'SeoCmsPage' %}
+    
+    
         <div class="row justify-content-center">
             <!-- section title -->
             <div class="col-xl-6 col-lg-8">
@@ -36,7 +50,7 @@ $this['records'] = Event::where('public', '=', 1)->where('time_begin', '>', now(
             <!-- /section title -->
         </div>
         <div class="row">
-            {% for record in records %}
+            {% for record in records2 %}
             
             <!-- team member -->
             <div class="col-lg-4 col-md-6">
@@ -44,11 +58,11 @@ $this['records'] = Event::where('public', '=', 1)->where('time_begin', '>', now(
                     <div class="member-photo">
                         {% if record.poster %}
                         <!-- photo -->
-                        <img loading="lazy" class="img-fluid" src="{{ record.poster.thumb(1170,880, {'mode':'crop'}) }}"
+                        <img loading="lazy" class="img-fluid" style="width: 25rem;" src="{{ record.poster.thumb(1170,770, {'mode':'crop'}) }}"
                             alt="Poster">
                         <!-- /photo -->
                         {% else %}
-                        <img loading="lazy" class="img-fluid" src="{{'assets/images/undraw_compose_music_ovo2.svg'|theme}}"
+                        <img loading="lazy" class="img-fluid" style="width: 25rem;" src="{{'assets/images/undraw_compose_music_ovo2.svg'|theme}}"
                         alt="Poster">
                         {% endif %}
                         <!-- member social profile -->
@@ -62,13 +76,13 @@ $this['records'] = Event::where('public', '=', 1)->where('time_begin', '>', now(
 
                     <!-- member name & designation -->
                     <div class="member-content">
-                        <h3><a href="/evenement/{{ record.slug }}">{{ record.name }}</a></h3>
-                       <p> à
+                        <h3><a href="{{ detailsPage|page({ (detailsUrlParameter): attribute(record, detailsKeyColumn) }) }}">{{ record.name }}</a></h3>
+                       <p> à 
                             {% for location in record.locations %}
-                            <a href="/lieu/{{location.slug}}">{{location.name}}</a>
+                            {{location.name}}
                             {% endfor%}
                         
-                            le {{ record.time_begin|frenchDate('%e %B %Y') }} {{record.description|raw}}
+                            le {{ record.time_begin|frenchDate('%e %B %Y') }}
                         </p>
                     </div>
                     <!-- /member name & designation -->

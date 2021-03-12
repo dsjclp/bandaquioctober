@@ -1,0 +1,48 @@
+<?php $strawpoll = $this->vars['formModel'] ?>
+<?php if($strawpoll->strawpoll_votes->count() > 0) { ?>
+<div
+    class="control-chart centered wrap-legend"
+    data-control="chart-pie"
+    data-size="200"
+    data-center-text="100">
+    <ul>
+        
+        <?php foreach($strawpoll->strawpoll_choices as $strawpoll_choice) { ?>
+            <li data-color="<?= $strawpoll_choice->color ?>"><?= $strawpoll_choice->name ?><span><?= $strawpoll_choice->count() ?></span></li>
+        <?php } ?>
+    </ul>
+</div>
+<?php } else { ?>
+    
+    <div class="callout fade in callout-success">
+        <div class="content">
+            <p><?= trans('papangproduction.strawpoll::lang.strawpoll.noVote') ?></p>
+        </div>
+    </div>
+    <?php if($strawpoll->status != 'draft') { ?>
+    <div class="control-list list-unresponsive">
+        <table class="table data">
+            <thead>
+                <tr>
+                    <th style="width: 5px"><span><?= trans('papangproduction.strawpoll::lang.strawpollChoice.color') ?></span></th>
+                    <th><span><?= trans('papangproduction.strawpoll::lang.strawpollChoice.name') ?></span></th>
+                    <th><span><?= trans('papangproduction.strawpoll::lang.strawpollChoice.description') ?></span></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach($strawpoll->strawpoll_choices as $strawpoll_choice) { ?>
+                <tr>
+                    <td>
+                        <span data-color="<?= $strawpoll_choice->color ?>">
+                            
+                        </span>
+                    </td>
+                    <td><?= $strawpoll_choice->name ?></td>
+                    <td><?= $strawpoll_choice->description ?></td>
+                </tr>
+                <?php } ?>
+            </tbody>
+        </table>
+    </div>
+    <?php } ?>
+<?php } ?>

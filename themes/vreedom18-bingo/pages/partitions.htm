@@ -18,76 +18,213 @@ pageNumber = "{{ :page }}"
 {% partial 'site/sp-header' %}
 
 
-<section class="blog-details section">
+
+
+
+<section class="about-2 section" id="about">
+
     <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <article class="post">
-                    <!-- Post Content -->
-                    <div class="post-content">
-                        <h3>Vos partitions</h3>
-                        <h4>par série</h4>
-                        <div class="widget-search widget">
-                            <form action="{{ 'search' | page }}" method="get">
-                                <!-- Search bar -->
-                                <input class="form-control shadow-none" type="text" placeholder="Recherchez..." name="q">
-                                <button type="submit" class="widget-search-btn">
-                                    <i class="tf-ion-ios-search"></i>
-                                </button>
-                            </form>
-                        </div>
-                        
-{% set records = builderList.records %}
-{% set displayColumn = builderList.displayColumn %}
-{% set noRecordsMessage = builderList.noRecordsMessage %}
-{% set detailsPage = builderList.detailsPage %}
-{% set detailsKeyColumn = builderList.detailsKeyColumn %}
-{% set detailsUrlParameter = builderList.detailsUrlParameter %}
 
-<ul class="record-list comment-list">
-    {% for record in records %}
-    <li class="comment-list-item">
-        <div class="comment-list-item-image">
-            <img loading="lazy" src="{{ 'assets/images/blog/comment-1.jpg'|theme }}" alt="comment-img">
-        </div>
-        <div class="comment-list-item-content">
-            <h5>{{record.name}}</h5>
-            <h6>{% for genre in record.genres %}{{genre.genre_title}}{% endfor %}</h6>
-            <p>{{record.description}}</p>
-                {% for file in record.gallery %}
-                <a href="{{ 'prive'|page }}" class="comment-btn">retour</a>
-            <a href="{{file.path}}" class="btn btn-primary text-white" ><i class="tf-ion-ios-book-outline"></i>&nbsp;&nbsp;{{file.file_name}}</a> 
-            {% endfor %}
-        </div>
-    </li>
-    {% else %}
-        <li class="no-data">{{ noRecordsMessage }}</li>
-    {% endfor %}
-</ul>
+        <div class="row justify-content-center">
 
-{% if records.lastPage > 1 %}
-    <ul class="pagination">
-        {% if records.currentPage > 1 %}
-            <li><a href="{{ this.page.baseFileName|page({ (pageParam): (records.currentPage-1) }) }}">&larr; Prev</a></li>
-        {% endif %}
+            <!-- section title -->
 
-        {% for page in 1..records.lastPage %}
-            <li class="{{ records.currentPage == page ? 'active' : null }}">
-                <a href="{{ this.page.baseFileName|page({ (pageParam): page }) }}">{{ page }}</a>
-            </li>
-        {% endfor %}
+            <div class="col-lg-6">
 
-        {% if records.lastPage > records.currentPage %}
-            <li><a href="{{ this.page.baseFileName|page({ (pageParam): (records.currentPage+1) }) }}">Next &rarr;</a></li>
-        {% endif %}
-    </ul>
-{% endif %}  
-                        
+                <div class="title text-center">
 
-                    </div>
-                </article>
+                    <h2>Documents et partitions</h2>
+
+                    <p>
+
+                        Retrouvez ici l'ensemble des partitions de la banda.
+
+                        <br>Atttention: Certaines de ces partitions comprennent plusieurs fichiers pdf.
+
+                    </p>
+
+                    <div class="border"></div>
+
+                </div>
+
             </div>
 
+            <!-- /section title -->
+
         </div>
+
+
+
+        <div class="row">
+
+
+
+            <div class="col-md-6 mb-4 mb-md-0 d-none d-md-block">
+
+                <img loading="lazy" src="{{'assets/images/undraw_attached_file_n4wm.svg'|theme}}" class="img-fluid" style="width: 25rem;" alt="">
+
+            </div>
+
+            <div class="col-md-6">
+
+                <ul class="checklist">
+
+                    <li>Les partitions sont organisées en 8 séries.
+
+                    </li>
+
+                    <li>La liste de ces séries a été actualisée en septembre 2020</li>
+
+                </ul>
+
+                <a href="https://yarig.fr/bandaqui/themes/vreedom18-bingo/assets/images/liste%20des%20s%C3%A9ries%20sept%202020.pdf" class="btn btn-main mt-20">Liste actuelle des séries</a>
+
+            </div>
+
+        </div> <!-- End row -->
+
+    </div> <!-- End container -->
+
+</section> <!-- End section -->
+
+
+
+
+
+
+
+{% set records = builderList.records %}
+
+{% set displayColumn = builderList.displayColumn %}
+
+{% set noRecordsMessage = builderList.noRecordsMessage %}
+
+{% set detailsPage = builderList.detailsPage %}
+
+{% set detailsKeyColumn = builderList.detailsKeyColumn %}
+
+{% set detailsUrlParameter = builderList.detailsUrlParameter %}
+
+
+
+
+
+<section class="pricing-table">
+
+    <div class="container">
+
+
+
+        <div class="row justify-content-center">
+
+            <!-- section title -->
+
+            <div class="col-xl-6 col-lg-8">
+
+                <div class="title title-white text-center ">
+
+                    <h2>Vos séries</h2>
+
+                    <p>
+
+                    </p>
+
+                    <div class="border"></div>
+
+                </div>
+
+            </div>
+
+            <!-- /section title -->
+
+        </div>
+
+
+
+<div class="row">
+
+    {% for i in 1..8 %}
+
+    
+
+    <!-- single pricing table -->
+
+    <div class="col-lg-4 col-md-6">
+
+        <div class="pricing-item">
+
+
+
+            <!-- plan name & value -->
+
+            <div class="price-title">
+
+                <strong class="value">Série {{i}}</strong>
+
+                <p></p>
+
+            </div>
+
+            <!-- /plan name & value -->
+
+            <ul>
+
+            {% for record in records %}
+
+
+
+            {% if record.serie  == i %}
+
+
+
+            <!-- plan description -->
+
+            <li><i class="tf-ion-ios-arrow-forward"></i>{{record.serie}} {{record.rank}} {{record.name}}
+
+                <br>
+
+                <i class="tf-ion-android-download"></i>
+
+                {% for file in record.gallery %}
+
+                    <a href="{{file.path}}" >{{file.file_name}}</a> &nbsp;
+
+                {% endfor %}
+
+            </li>
+
+
+
+            <!-- /plan description -->
+
+            {% endif %}
+
+
+
+            {% endfor %}
+
+        </ul>
+
+
+
+        </div>
+
     </div>
+
+    <!-- end single pricing table -->
+
+  
+
+{% endfor %}
+
+
+
+
+
+</div> <!-- End row -->
+
+
+
+</div>
+
 </section>

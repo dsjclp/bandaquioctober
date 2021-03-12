@@ -1,0 +1,196 @@
+title = "Forum Topic"
+url = "/forum/topic/:slug"
+layout = "default"
+description = "Viewing a single topic"
+is_hidden = 0
+
+[forumTopic]
+slug = "{{ :slug }}"
+postsPerPage = 20
+memberPage = "forum/member"
+channelPage = "forum/channel"
+includeStyles = 1
+==
+<?php
+function onEnd()
+{
+    if ($this['topic'])
+    {$this->page->title = "Sujet : ".$this['topic']->subject;}
+}
+?>
+==
+{% partial 'site/sp-header' %}
+
+<section class="posts section">
+    <div class="container">
+
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <!-- section title -->
+                <div class="title text-center">
+                    <h2>{{topic.subject}}</h2>
+                    <p>Dans la discussion : "{{channel.title}}"</p>
+                    <div class="border"></div>
+                </div>
+                <!-- /section title -->
+            </div>
+        </div>
+
+        <div class="rainlab-forum">
+        
+            {% flash %}
+                <div class="alert alert-{{ type == 'error' ? 'danger' : type }}">
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                </div>
+            {% endflash %}
+        
+            {% if returnUrl %}
+                <p>&larr; <a href="{{ returnUrl }}">Retour à la discussion "{{ channel.title }}"</a></p>
+            {% endif %}
+        
+            {% if topic %}
+        
+                <h4>{{ topic.subject }}</h4>
+        
+                <div class="row">
+                    <div class="col-md-3 col-md-push-9">
+        
+                        <div id="topicControlPanel">
+                        
+                            <div class="panel">
+                                <div class="list-group">
+                            
+                                    {% if member.is_moderator %}
+                                        <div class="list-group-item">
+                                            {{ form_open({ request: 'onMove', 'data-request-confirm': "Are you sure?" }) }}
+                                                <label>Move to:</label>
+                                                <select name="channel" class="form-control input-sm">
+                                                    {% for id, title in __SELF__.channelList %}
+                                                        <option value="{{ id }}">{{ title|raw }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                                <button type="submit" class="btn btn-block btn-primary btn-sm">Move</button>
+                                            {{ form_close() }}
+                                        </div>
+                            
+                                        <a href="javascript:;"
+                                            class="list-group-item"
+                                            data-request="onLock"
+                                            data-request-update="'@controlpanel': '#topicControlPanel'">
+                                            {% if topic.is_locked %}
+                                                Unlock topic
+                                            {% else %}
+                                                Lock topic
+                                            {% endif %}
+                                        </a>
+                            
+                                        <a href="javascript:;"
+                                            class="list-group-item"
+                                            data-request="onSticky"
+                                            data-request-update="'@controlpanel': '#topicControlPanel'">
+                                            {% if topic.is_sticky %}
+                                                Unsticky topic
+                                            {% else %}
+                                                Sticky topic
+                                            {% endif %}
+                                        </a>
+                                    {% endif %}
+                            
+                                    {% if member %}
+                                        <a href="javascript:;"
+                                            class="list-group-item"
+                                            data-request="onFollow"
+                                            data-request-update="'@controlpanel': '#topicControlPanel'">
+                                            {% if member.isFollowing(topic) %}
+                                                Cesser de suivre ce sujet
+                                            {% else %}
+                                               Suivre ce sujet
+                                            {% endif %}
+                                        </a>
+                                    {% endif %}
+                            
+                                    {% if topic.is_locked %}
+                                        <div class="list-group-item">
+                                            <span class="text text-danger"><i class="icon icon-lock"></i> This topic is locked</span>
+                                        </div>
+                                    {% else %}
+                                        <a href="#postForm" class="list-group-item">
+                                            Envoyez une réponse
+                                        </a>
+                                    {% endif %}
+                            
+                                    <div class="list-group-item">
+                                        <i class="fa fa-eye icon-eye-open"></i> {{ topic.count_views }} vues
+                                    </div>
+                            
+                                </div>
+                            </div>
+
+                            
+                        </div>
+        
+                    </div>
+                    <div class="col-md-9 col-md-pull-3">
+        
+                        {% partial "@posts" %}
+        
+                        {% partial "@pagination" %}
+        
+                        <h4>Répondez</h4>
+                        {% if not topic.canPost %}
+                            <p>
+                                You cannot edit posts or make replies:
+                                {% if not member %}You should be logged in before you can post.{% endif %}
+                                {% if member.is_banned %}Your account is banned.{% endif %}
+                                {% if topic.is_locked %}This topic is locked.{% endif %}
+                            </p>
+                        {% else %}
+                        
+                        
+                            <div class="reply-form" id="postForm">
+
+                                {{ form_open({ request: 'onPost' }) }}
+                            
+                                    <input type="hidden" name="topic" value="{{ topic.id }}" />
+                            
+                                    <div class="member-area">
+                                        <img src="{{ member.user.avatarThumb(50) }}" class="member-avatar" alt="{{ member.username }}" />
+                                    </div>
+                            
+                                    <div class="post-area">
+                                        <textarea
+                                            id="topicContent"
+                                            name="content"
+                                            rows="6"
+                                            class="form-control">{{ form_value('content') }}</textarea>
+
+                                        <div class="post-buttons mt-3">
+                                            <button type="submit" class="btn btn-main btn-lg">Envoyez une réponse</button>
+                                        </div>
+                                    </div>
+                            
+                                {{ form_close() }}
+                            
+                            </div>
+                            
+                            
+                        {% endif %}
+        
+                    </div>
+                </div>
+        
+            {% elseif channel %}
+        
+                <h4>Créez un nouveau sujet de discussion</h4>
+                {% partial "@createform" %}
+        
+            {% else %}
+        
+                <p>Aucun sujet trouvé</p>
+        
+            {% endif %}
+        </div>
+            
+    </div>
+</section>

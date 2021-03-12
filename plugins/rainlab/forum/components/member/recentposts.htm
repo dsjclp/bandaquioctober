@@ -2,8 +2,8 @@
 
 <table class="forum-table">
     <tr>
-        <th>Post</th>
-        <th class="activity-column">When</th>
+        <th>Messages</th>
+        <th class="activity-column">Quand</th>
     </tr>
 
     {% for post in posts %}
@@ -14,7 +14,7 @@
             </td>
             <td class="activity-column">
                 <p>
-                    Posted in
+                    Publié sur
                     <a href="{{ topic.url }}?page=last#post-{{ post.id }}">{{ topic.subject }}</a>
                     {% partial __SELF__ ~ "::timestamp" date=post.updated_at %}
                 </p>
@@ -24,7 +24,7 @@
 
     {% if not posts|length %}
         <tr>
-            <td colspan="100">This member has not participated in the forum.</td>
+            <td colspan="100">Ce membre n'a pas encore participé au forum.</td>
         </tr>
     {% endif %}
 </table>

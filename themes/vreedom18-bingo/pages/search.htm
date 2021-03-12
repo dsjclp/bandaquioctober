@@ -12,12 +12,36 @@ visitPageMessage = "Visit page"
 {% partial 'site/sp-header' %}
 {% set results = searchResults.results %}
 
-{% for result in results %}
-    {# Display all results #}
-    {% partial searchResults ~ '::searchresult.htm' result = result %}
-{% else %}
-    {# No results found #}
-    {% partial searchResults ~ '::no-results.htm' %}
-{% endfor %}
+<section class="posts section">
+    <div class="container">
 
-{% partial searchResults ~ '::pagination.htm' results = results %}
+        <div class="row justify-content-center">
+            <!-- section title -->
+            <div class="col-xl-6 col-lg-8">
+                <div class="title text-center">
+                    <h2>Le résultat de votre recherche</h2>
+                    <p>
+                        Voici les pages qui contiennent le texte de votre recherche.
+                    </p>
+                    <div class="border"></div>
+                </div>
+            </div>
+            <!-- /section title -->
+        </div>
+
+        <div class="row">
+
+            {% for result in results %}
+            {# Display all results #}
+            {% partial searchResults ~ '::searchresult.htm' result = result %}
+        {% else %}
+            {# No results found #}
+            {% partial searchResults ~ '::no-results.htm' %}
+        {% endfor %}
+        
+        {% partial searchResults ~ '::pagination.htm' results = results %}
+
+
+        </div>
+    </div>
+</section>

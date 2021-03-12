@@ -253,6 +253,14 @@ class Account extends ComponentBase
             /*
              * Redirect
              */
+
+             
+                //
+                // Sets a successful message  DLP
+                //
+                Flash::success('Connexion réussie !');
+
+
             if ($redirect = $this->makeRedirection(true)) {
                 return $redirect;
             }

@@ -1,0 +1,9 @@
+<?php
+
+$status = [
+    'draft' => 'papangproduction.strawpoll::lang.strawpoll.draft',
+    'published' => 'papangproduction.strawpoll::lang.strawpoll.published',
+    'disabled' => 'papangproduction.strawpoll::lang.strawpoll.disabled'
+];
+
+echo Lang::get($status[$record->status]);

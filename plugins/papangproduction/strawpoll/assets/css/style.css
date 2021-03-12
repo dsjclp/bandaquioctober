@@ -1,0 +1,42 @@
+.strawpoll-description{
+    border: 1px solid #E0E0E0;
+    border-radius: 5px;
+    padding: 10px;
+}
+.strawpoll-publishedend{
+    font-style: italic;
+    font-size: 0.8em;
+    text-align: right;
+}
+
+.choice-desc{
+    border: 1px solid transparent;
+    padding: 10px;
+    color:white;  
+    border-radius: 5px;
+    transition: background-color 1s ease;
+}
+.choice-desc-box{
+    background-color:#A8001F;              
+    border-color:#E0E0E0;
+    height:auto;
+}
+
+.strawpolls-list li{
+    cursor: pointer;
+}
+
+
+.strawpolls-list > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
+    background-color: #570010;
+}
+
+.strawpolls-list > li > a{
+    color: #570010;
+}
+
+.nav > li > a:hover, .nav > li > a:focus {
+    text-decoration: none;
+    background-color: #A8001F;
+    color:white;
+}

@@ -30,9 +30,7 @@ description = "About Shot Info Partial"
                 <div id="clients-slider" class="clients-logo-slider">
 
                         {% for user in users %}
-                            <img loading="lazy" src="{{ user.avatar.thumb(270,160, {'mode':'crop'}) }}" alt="">
-                            <img loading="lazy" src="{{ 'assets/images/client-logo/logo1.png'|theme }}" alt="">
-                            <img loading="lazy" src="{{ 'assets/images/client-logo/logo1.png'|theme }}" alt="">
+                            <img loading="lazy" src="{{ user.avatar.thumb(300,300, {'mode':'crop'}) }}" alt="">
                         {% else %}
                             <li class="no-data">{{ 'No User' }}</li>
                         {% endfor %}

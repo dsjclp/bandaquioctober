@@ -28,7 +28,7 @@ return [
         'page_help' => 'Page name to use for clicking on a Channel.'
     ],
     'channels' => [
-        'new_channel' => 'New Channel',
+        'new_channel' => 'Nouvelle discussion',
         'delete_selected_confirm' => 'Are you sure?',
         'delete' => 'Delete',
         'manage' => 'Manage Channel Order',

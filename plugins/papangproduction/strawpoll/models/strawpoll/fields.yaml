@@ -1,0 +1,69 @@
+fields:
+    name:
+        label: 'papangproduction.strawpoll::lang.strawpoll.name'
+        span: auto
+        type: text
+    slug:
+        label: 'papangproduction.strawpoll::lang.strawpoll.slug'
+        span: auto
+        preset:
+            field: name
+            type: url
+        type: text
+    mode:
+        label: 'papangproduction.strawpoll::lang.strawpoll.mode'
+        span: left
+        type: radio
+        options:
+            1: 'papangproduction.strawpoll::lang.settings.anonymous'
+            2: 'papangproduction.strawpoll::lang.settings.public'
+    description:
+        label: 'papangproduction.strawpoll::lang.strawpoll.description'
+        size: large
+        span: full
+        placeholder: 'papangproduction.strawpoll::lang.strawpoll.description'
+        type: textarea    
+    view_mode:
+            label: 'papangproduction.strawpoll::lang.strawpoll.view_type'
+            required: true
+            type: dropdown
+            options:
+                1: 'papangproduction.strawpoll::lang.strawpoll.view_mode.pie_chart'
+                2: 'papangproduction.strawpoll::lang.strawpoll.view_mode.bar_chart'
+    strawpoll_choices:
+        span: full
+        path: $/papangproduction/strawpoll/models/strawpoll/_strawpoll_choices_edit.htm        
+        type: partial
+    results:
+        type: partial
+        context: update
+        path: $/papangproduction/strawpoll/models/strawpoll/_strawpoll_show_results.htm
+       
+secondaryTabs:
+    fields:   
+        status:
+            label: 'papangproduction.strawpoll::lang.strawpoll.status'
+            required: true
+            type: dropdown
+            options:
+                draft: 'papangproduction.strawpoll::lang.strawpoll.draft'
+                published: 'papangproduction.strawpoll::lang.strawpoll.published'
+                disabled: 'papangproduction.strawpoll::lang.strawpoll.disabled'
+                         
+        published_at:
+                label: 'papangproduction.strawpoll::lang.strawpoll.published_at'
+                type: datepicker
+                mode: datetime
+                trigger:
+                    action: enable
+                    field: status
+                    condition: value[published][disabled]
+                
+        published_end:
+                label: 'papangproduction.strawpoll::lang.strawpoll.published_end'
+                type: datepicker
+                mode: datetime
+                trigger:
+                    action: enable
+                    field: status
+                    condition: value[published][disabled]

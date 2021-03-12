@@ -1,0 +1,10 @@
+strawpoll_choices:
+    context: create|update
+    label: Strawpoll choice
+    view:
+        list: $/papangproduction/strawpoll/models/strawpollchoice/columns.yaml
+        toolbarButtons: create|delete
+    manage:
+        form: $/papangproduction/strawpoll/models/strawpollchoice/fields.yaml
+        deferredBinding: true
+        recordsPerPage: 10

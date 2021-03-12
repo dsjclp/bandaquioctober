@@ -8,3 +8,9 @@ columns:
     longitude:
         label: longitude
         type: text
+    description:
+        label: description
+        type: text
+    po:
+        label: 'code postal'
+        type: number

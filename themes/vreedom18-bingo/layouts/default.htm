@@ -39,6 +39,8 @@ code = "headermenu"
     <link rel="stylesheet" href="{{ 'assets/plugins/slick/slick.css'|theme }}">
     <!-- Main Stylesheet -->
     <link rel="stylesheet" href="{{ 'assets/css/style.css'|theme }}">
+    <!-- Forum Stylesheet -->
+    <link rel="stylesheet" href="{{ 'assets/css/forum.css'|theme }}">
 
 </head>
 <body id="body">
@@ -59,11 +61,16 @@ code = "headermenu"
     End Preloader
     ==================================== -->
     
+    
     {% flash %}
-    <p class='info' data-control="flash-message" data-interval="5">
-    {{ message }}
+    <p
+        data-control="flash-message"
+        class="flash-message fade {{ type }}"
+        data-interval="5">
+        {{ message }}
     </p>
-    {% endflash %}
+{% endflash %}
+
     
     {% partial 'site/header' %}
     
@@ -89,12 +96,12 @@ code = "headermenu"
     <script src="{{ 'assets/plugins/filterizr/jquery.filterizr.min.js'|theme }}"></script>
     <!-- Smooth Scroll js -->
     <script src="{{ 'assets/plugins/smooth-scroll/smooth-scroll.min.js'|theme }}"></script>
-    <!-- Google Map -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcABaamniA6OL5YvYSpB3pFMNrXwXnLwU"></script>
-    <script src="{{ 'assets/plugins/google-map/gmap.js'|theme }}"></script>
     
     <!-- Custom js -->
     <script src="{{ 'assets/js/script.js'|theme }}"></script>
+
+    <!-- Custom js -->
+    <script src="{{ 'assets/js/forum.js'|theme }}"></script>
 
     {% framework extras %}
 </body>

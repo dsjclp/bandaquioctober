@@ -18,10 +18,6 @@ navigation:
                 label: Lieux
                 url: dlp/events/locations
                 icon: icon-map-marker
-            side-menu-item3:
-                label: Instruments
-                url: dlp/events/instruments
-                icon: icon-music
             side-menu-item4:
                 label: Inscriptions
                 url: dlp/events/inscriptions

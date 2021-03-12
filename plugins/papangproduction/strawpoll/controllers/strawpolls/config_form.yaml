@@ -1,0 +1,10 @@
+name: 'papangproduction.strawpoll::lang.strawpolls.name'
+modelClass: PapangProduction\Strawpoll\Models\Strawpoll
+form: ~/plugins/papangproduction/strawpoll/models/strawpoll/fields.yaml
+defaultRedirect: papangproduction/strawpoll/strawpolls
+create:
+    redirect: 'papangproduction/strawpoll/strawpolls/update/:id'
+    redirectClose: papangproduction/strawpoll/strawpolls
+update:
+    redirect: 'papangproduction/strawpoll/strawpolls/update/:id'
+    redirectClose: papangproduction/strawpoll/strawpolls

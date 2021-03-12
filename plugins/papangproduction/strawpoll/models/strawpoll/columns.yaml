@@ -1,0 +1,27 @@
+columns:
+    name:
+        label: 'papangproduction.strawpoll::lang.strawpoll.name'
+        type: text
+        searchable: true
+        sortable: true
+    status:
+        label: 'papangproduction.strawpoll::lang.strawpoll.status'
+        type: partial
+        searchable: false
+        sortable: true
+        path: ~/plugins/papangproduction/strawpoll/models/strawpoll/_status.htm
+    description:
+        label: 'papangproduction.strawpoll::lang.strawpoll.description'
+        type: text
+        searchable: true
+        sortable: true
+    created_at:
+        label: 'papangproduction.strawpoll::lang.strawpoll.created_at'
+        type: date
+        searchable: true
+        sortable: true
+    updated_at:
+        label: 'papangproduction.strawpoll::lang.strawpoll.updated_at'
+        type: date
+        searchable: true
+        sortable: true

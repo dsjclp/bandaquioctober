@@ -14,12 +14,12 @@ identifierValue = "{{ :slug }}"
 modelKeyColumn = "slug"
 displayColumn = "slug"
 notFoundMessage = "Record not found"
-
 ==
 <?php
 use  Dlp\Events\Models\Inscription;
 use  Dlp\Events\Models\Event;
-use  Dlp\Events\Models\Instrument;
+use  RainLab\User\Models\UserGroup;
+use  RainLab\User\Models\User;
 
 function onStart()
 {
@@ -30,17 +30,22 @@ function onStart()
     $slug = $this->param('slug');
     $this['event'] = Event::where('slug', '=', $slug)->first();
 
-    $this['presences'] = Inscription::all()->where('event_id', '=', $this['event']->id)->where('position', '=', 1)->countBy('instrument_id');
-    $this['absences']  = Inscription::all()->where('event_id', '=', $this['event']->id)->where('position', '=', 0)->countBy('instrument_id');
+    $this['presencesby'] = Inscription::all()->where('event_id', '=', $this['event']->id)->where('position', '=', 1)->countBy('instrument_id');
+    $this['absencesby']  = Inscription::all()->where('event_id', '=', $this['event']->id)->where('position', '=', 0)->countBy('instrument_id');
     
-    $this['presencescount'] = $this['presences']->map(function ($item, $key) {
-        $instrument = Instrument::find($key);
+    $this['presencestotal'] = Inscription::all()->where('event_id', '=', $this['event']->id)->where('position', '=', 1)->count();
+    $this['absencestotal']  = Inscription::all()->where('event_id', '=', $this['event']->id)->where('position', '=', 0)->count();
+    
+    $this['presences'] = Inscription::all()->where('event_id', '=', $this['event']->id)->where('position', '=', 1);
+    
+    $this['presencescount'] = $this['presencesby']->map(function ($item, $key) {
+        $instrument = UserGroup::find($key);
         $key = $instrument->name;
         return $item . ' en '.$key;
     });
 
-    $this['absencescount'] = $this['absences']->map(function ($item, $key) {
-        $instrument = Instrument::find($key);
+    $this['absencescount'] = $this['absencesby']->map(function ($item, $key) {
+        $instrument = UserGroup::find($key);
         $key = $instrument->name;
         return $item . ' en '.$key;
     });
@@ -48,8 +53,7 @@ function onStart()
 }
 ?>
 ==
-
-
+{% partial 'site/sp-header' %}
 
 {% set record = builderDetails.record %}
 {% set displayColumn = builderDetails.displayColumn %}
@@ -157,35 +161,40 @@ function onStart()
             <div class="col-md-6">
                 <div class="team-skills-content">
                     <h3 class="mb-3">Les musiciens ayant déjà répondu</h3>
-                    <ul class="comment-list" id="result">
-                        <!-- comment list -->
-                        <li class="comment-list-item">
-                            <div class="comment-list-item-image">
-                                <img loading="lazy" src="{{ 'assets/images/blog/comment-1.jpg'|theme }}" alt="comment-img">
-                            </div>
-                            <div class="comment-list-item-content">
-                                <h5>Présences</h5>
-                                <h6><ul class="checklist">
+
+
+                    <div class="widget-post widget" id="result">
+                        <ul class="widget-post-list">
+                            <li class="widget-post-list-item">
+                                <div class="widget-post-image">
+                                    <a href="{{ 'single-post'|page }}">
+                                        <img loading="lazy" src="{{ 'assets/images/october.png'|theme }}" alt="post-img">
+                                    </a>
+                                </div>
+                                <div class="widget-post-content">
+                                    <h5>Présences : {{presencestotal}}</h5>
                                     {% for presence in presencescount %}
-                                        <li>{{ presence }}</li>
+                                        <h6><li> <i class="tf-ion-ios-musical-note"></i>&nbsp;&nbsp;{{ presence }}</h6>
                                     {% endfor %}
-                                </ul></h6>
+                                </div>
+                            </li>
+                            <div class="clients-logo-slider">
+                                    {% for presence in presences %}
+                                        <img loading="lazy" src="{{ presence.user.avatar.thumb(300,300, {'mode':'crop'}) }}" alt="">
+                                    {% endfor %}
                             </div>
-                        </li>
-                        <li class="comment-list-item">
-                            <div class="comment-list-item-image">
-                                <img loading="lazy" src="{{ 'assets/images/blog/comment-1.jpg'|theme }}" alt="comment-img">
-                            </div>
-                            <div class="comment-list-item-content">
-                                <h5>Absences</h5>
-                                <h6> 
-                                    <ul class="checklist">
-                                        <li>{% for absence in absencescount %}{{ absence }},&nbsp;{% endfor %}</li>
-                                    <ul>
-                                </h6>
-                            </div>
-                        </li>
-                    </ul>
+                            <hr class="mb-5 mt-5">
+                            <li class="widget-post-list-item">
+                                <div class="widget-post-image">
+                                    <img loading="lazy" src="{{ 'assets/images/absenceslogo.png'|theme }}" alt="post-img">
+                                </div>
+                                <div class="widget-post-content">
+                                    <h5>Absences : {{absencestotal}}</h5>
+                                    <h6>{% for absence in absencescount %}{{ absence }},&nbsp;{% endfor %}</h6>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
 
@@ -205,7 +214,7 @@ function onStart()
                     <div class="form-group mb-4">
                         <select class="form-control custom-select" name="instrument">
                             {% for instrument in inscriptionform.loadinstruments  %}
-                                <option value={{instrument.id}}>{{instrument.name}}</option>
+                                <option value={{instrument.id}}>Instrument : {{instrument.name}}</option>
                                 {% endfor %}
                         </select>
                     </div>

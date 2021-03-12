@@ -51,24 +51,103 @@ items:
             isHidden: '0'
             cssClass: ''
             isExternal: '0'
+        items:
+            -
+                title: Evenements
+                nesting: null
+                type: cms-page
+                url: null
+                code: ''
+                reference: evenements
+                cmsPage: null
+                replace: null
+                viewBag:
+                    isHidden: '0'
+                    cssClass: ''
+                    isExternal: '0'
+            -
+                title: Partitions
+                nesting: null
+                type: cms-page
+                url: null
+                code: ''
+                reference: partitions
+                cmsPage: null
+                replace: null
+                viewBag:
+                    isHidden: '0'
+                    cssClass: ''
+                    isExternal: '0'
+            -
+                title: Messages
+                nesting: null
+                type: cms-page
+                url: null
+                code: ''
+                reference: messages
+                cmsPage: null
+                replace: null
+                viewBag:
+                    isHidden: '0'
+                    cssClass: ''
+                    isExternal: '0'
+            -
+                title: Lieux
+                nesting: null
+                type: cms-page
+                url: null
+                code: ''
+                reference: lieux
+                cmsPage: null
+                replace: null
+                viewBag:
+                    isHidden: '0'
+                    cssClass: ''
+                    isExternal: '0'
+            -
+                title: Forum
+                nesting: null
+                type: cms-page
+                url: null
+                code: ''
+                reference: forum
+                cmsPage: null
+                replace: null
+                viewBag:
+                    isHidden: '0'
+                    cssClass: ''
+                    isExternal: '0'
+            -
+                title: Sondages
+                nesting: null
+                type: cms-page
+                url: null
+                code: ''
+                reference: sondages
+                cmsPage: null
+                replace: null
+                viewBag:
+                    isHidden: '0'
+                    cssClass: ''
+                    isExternal: '0'
     -
-        title: Login
-        nesting: null
+        title: Connexion
         type: cms-page
-        url: null
         code: ''
         reference: login
-        cmsPage: null
-        replace: null
         viewBag:
             isHidden: '0'
             cssClass: ''
             isExternal: '0'
     -
         title: Contact
+        nesting: null
         type: cms-page
+        url: null
         code: ''
         reference: contact
+        cmsPage: null
+        replace: null
         viewBag:
             isHidden: '0'
             cssClass: ''

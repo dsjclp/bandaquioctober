@@ -16,6 +16,10 @@ fields:
         label: Longitude
         span: right
         type: number
+    postal_code:
+        label: 'Code postal'
+        span: auto
+        type: number
     slug:
         label: Slug
         span: auto
